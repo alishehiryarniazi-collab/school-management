@@ -71,8 +71,12 @@ are DB rows (not hardcoded), so this scales freely. Student lists get search + f
      reset password, auto synthetic login email, roll unique per section
    - teaching assignments (teacher↔section↔subject), all with validation + safe deletes
    - Verified end-to-end incl. student login with default password
-5. Attendance + Notices ⬅️ NEXT
-6. Marks + Syllabus + Date sheet + Timetable
+   * FRONTEND (admin UI) ✅ DONE — React Router app, auth context, calm admin
+     theme + UI kit, login (staff+student), dashboard (live stats), and full
+     CRUD pages for Subjects, Teachers, Classes/Sections, Students (search,
+     filters, pagination, assign/move). Verified in-browser incl. create flow.
+5. Attendance + Notices ⬅️ NEXT (backend + UI)
+6. Marks + Syllabus + Date sheet + Timetable (backend + UI)
 7. Student portal (read-only)
 8. Polish (validation, edge cases, responsive), README, deploy
 

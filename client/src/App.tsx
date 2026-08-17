@@ -7,6 +7,9 @@ import { AdminLayout } from './layouts/AdminLayout'
 import { LoginPage } from './pages/LoginPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { SubjectsPage } from './pages/SubjectsPage'
+import { TeachersPage } from './pages/TeachersPage'
+import { ClassesPage } from './pages/ClassesPage'
+import { StudentsPage } from './pages/StudentsPage'
 import { Placeholder, StudentPortalPage } from './pages/Placeholder'
 
 export default function App() {
@@ -25,14 +28,14 @@ export default function App() {
             }
           >
             <Route path="/" element={<DashboardPage />} />
-            <Route path="/students" element={<Placeholder title="Students" />} />
+            <Route path="/students" element={<StudentsPage />} />
 
             {/* Admin-only routes */}
             <Route
               path="/teachers"
               element={
                 <ProtectedRoute roles={['admin']}>
-                  <Placeholder title="Teachers" />
+                  <TeachersPage />
                 </ProtectedRoute>
               }
             />
@@ -40,7 +43,7 @@ export default function App() {
               path="/classes"
               element={
                 <ProtectedRoute roles={['admin']}>
-                  <Placeholder title="Classes & Sections" />
+                  <ClassesPage />
                 </ProtectedRoute>
               }
             />
