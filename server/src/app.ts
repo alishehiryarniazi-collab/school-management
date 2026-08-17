@@ -7,6 +7,9 @@ import cookieParser from 'cookie-parser'
 import { env } from './config/env.js'
 import { notFoundHandler, errorHandler } from './middleware/errorHandler.js'
 import authRoutes from './routes/auth.routes.js'
+import classRoutes from './routes/class.routes.js'
+import sectionRoutes from './routes/section.routes.js'
+import subjectRoutes from './routes/subject.routes.js'
 
 export function createApp() {
   const app = express()
@@ -30,6 +33,9 @@ export function createApp() {
 
   // --- Feature routes ---
   app.use('/api/auth', authRoutes)
+  app.use('/api/classes', classRoutes)
+  app.use('/api/sections', sectionRoutes)
+  app.use('/api/subjects', subjectRoutes)
   // app.use('/api/students', studentRoutes)  // (coming next)
 
   // Unknown route + global error handling (must be LAST).

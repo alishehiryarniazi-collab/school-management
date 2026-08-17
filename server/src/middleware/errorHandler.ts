@@ -40,6 +40,13 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
       res.status(404).json({ message: 'Record not found' })
       return
     }
+    if (err.code === 'P2003') {
+      // Foreign key restrict: trying to delete something still in use.
+      res.status(409).json({
+        message: 'This record is still linked to other data and cannot be deleted',
+      })
+      return
+    }
   }
 
   // 3) Our own expected errors
