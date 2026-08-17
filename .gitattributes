@@ -1,0 +1,12 @@
+# Normalize line endings: store as LF in the repo, check out native on each OS.
+# Keeps the repo consistent across Windows/Mac/Linux and silences CRLF warnings.
+* text=auto eol=lf
+
+# Binary files — never touch line endings.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg text
+*.ico binary
+*.db binary

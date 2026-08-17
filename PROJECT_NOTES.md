@@ -60,10 +60,12 @@ are DB rows (not hardcoded), so this scales freely. Student lists get search + f
 
 ## 5. Roadmap
 **v1 (building now)**
-1. Scaffold + tooling + Git ✅ (in progress)
-2. Database (Prisma + SQLite) + seed first admin
-3. Auth (3 roles, httpOnly cookies, bcrypt, role guards)
-4. Admin: teachers, students, classes/sections/subjects + assign students to class
+1. Scaffold + tooling + Git ✅ DONE
+2. Database (Prisma + SQLite) + seed first admin ✅ DONE (12 tables, admin + subjects seeded)
+3. Auth (3 roles, httpOnly cookies, bcrypt, role guards) ✅ DONE
+   - Staff login (email/pw), student login (sectionId+rollNo+pw), /me, logout
+   - requireAuth + requireRole middleware; public school-structure for login dropdowns
+4. Admin: teachers, students, classes/sections/subjects + assign students to class ⬅️ NEXT
 5. Attendance + Notices
 6. Marks + Syllabus + Date sheet + Timetable
 7. Student portal (read-only)
@@ -108,5 +110,8 @@ handled (empty/null/loading/failed) · clean structure + small components + comm
 no hardcoded secrets (use `.env`).
 
 ## 9. Open TODOs
-- [ ] Confirm default student password rule (roll number vs DOB vs fixed).
+- [ ] Confirm default student password rule (currently `school123` via env `DEFAULT_STUDENT_PASSWORD`).
 - [ ] Decide free hosting target when we reach deploy.
+- [ ] Attendance: normalize `date` to midnight (UTC) when marking, so the
+      unique(studentId, date) works per-day regardless of time-of-day.
+- [ ] For production cross-domain cookies, revisit sameSite='none' + secure=true.

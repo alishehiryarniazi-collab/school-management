@@ -6,6 +6,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import { env } from './config/env.js'
 import { notFoundHandler, errorHandler } from './middleware/errorHandler.js'
+import authRoutes from './routes/auth.routes.js'
 
 export function createApp() {
   const app = express()
@@ -27,9 +28,9 @@ export function createApp() {
     res.json({ status: 'ok', time: new Date().toISOString() })
   })
 
-  // --- Feature routes get mounted here as we build them ---
-  // app.use('/api/auth', authRoutes)
-  // app.use('/api/students', studentRoutes)
+  // --- Feature routes ---
+  app.use('/api/auth', authRoutes)
+  // app.use('/api/students', studentRoutes)  // (coming next)
 
   // Unknown route + global error handling (must be LAST).
   app.use(notFoundHandler)
