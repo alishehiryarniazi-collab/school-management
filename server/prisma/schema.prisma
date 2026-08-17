@@ -1,0 +1,220 @@
+// School Management System — database schema (Prisma + SQLite)
+//
+// Notes:
+// - SQLite has no native ENUM type, so fields like `role`, `status`, `gender`
+//   are plain String. Allowed values are documented in comments and enforced
+//   in the app layer with Zod validation.
+// - Roll numbers repeat across sections, so they are unique only *within* a
+//   section: see @@unique([sectionId, rollNo]) on Student.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// People & structure
+// ---------------------------------------------------------------------------
+
+// Every person who can log in (admin, teacher, student) is a User.
+// Student-specific academic fields live in the separate Student table.
+model User {
+  id           Int      @id @default(autoincrement())
+  fullName     String
+  email        String   @unique // admins/teachers log in with this; students get a generated one
+  passwordHash String
+  role         String // 'admin' | 'teacher' | 'student'
+  phone        String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // relations
+  student             Student? // set only when role = 'student'
+  classTeacherOf      Section[]            @relation("ClassTeacher")
+  teachingAssignments TeachingAssignment[]
+  attendanceMarked    Attendance[]         @relation("MarkedBy")
+  timetableSlots      Timetable[]
+  noticesPosted       Notice[]
+}
+
+// Academic profile for a student. One-to-one with a User (the login).
+model Student {
+  id            Int       @id @default(autoincrement())
+  userId        Int       @unique
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rollNo        Int
+  gender        String? // 'male' | 'female' | 'other'
+  dob           DateTime?
+  guardianName  String?
+  guardianPhone String?
+  address       String?
+  sectionId     Int
+  section       Section   @relation(fields: [sectionId], references: [id])
+  admissionDate DateTime  @default(now())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  attendance Attendance[]
+  marks      Mark[]
+
+  @@unique([sectionId, rollNo]) // roll no unique within one section
+}
+
+// A grade/year, e.g. "Class 5". Has many sections.
+model Class {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sections  Section[]
+  syllabus  Syllabus[]
+  datesheet Datesheet[]
+}
+
+// A section within a class, e.g. "A" (=> "5-A"). Optionally has a class teacher.
+model Section {
+  id             Int      @id @default(autoincrement())
+  name           String
+  classId        Int
+  class          Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  classTeacherId Int?
+  classTeacher   User?    @relation("ClassTeacher", fields: [classTeacherId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  students            Student[]
+  teachingAssignments TeachingAssignment[]
+  timetable           Timetable[]
+
+  @@unique([classId, name]) // "A" appears once per class
+}
+
+// A global subject (Math, English…). Reused across classes via relations below.
+model Subject {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  teachingAssignments TeachingAssignment[]
+  marks               Mark[]
+  syllabus            Syllabus[]
+  datesheet           Datesheet[]
+  timetable           Timetable[]
+}
+
+// Join table: which teacher teaches which subject to which section.
+model TeachingAssignment {
+  id        Int      @id @default(autoincrement())
+  teacherId Int
+  teacher   User     @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  sectionId Int
+  section   Section  @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  subjectId Int
+  subject   Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([teacherId, sectionId, subjectId])
+}
+
+// ---------------------------------------------------------------------------
+// Teacher-managed content that students view (read-only)
+// ---------------------------------------------------------------------------
+
+// One attendance row per student per day.
+model Attendance {
+  id         Int      @id @default(autoincrement())
+  studentId  Int
+  student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  date       DateTime // the day being marked
+  status     String // 'present' | 'absent' | 'late' | 'leave'
+  markedById Int?
+  markedBy   User?    @relation("MarkedBy", fields: [markedById], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([studentId, date])
+}
+
+// A student's marks for one subject in one exam.
+model Mark {
+  id            Int      @id @default(autoincrement())
+  studentId     Int
+  student       Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  subjectId     Int
+  subject       Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  examName      String // 'Midterm' | 'Final' | ...
+  marksObtained Float
+  totalMarks    Float
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([studentId, subjectId, examName])
+}
+
+// Syllabus for a subject in a class.
+model Syllabus {
+  id        Int      @id @default(autoincrement())
+  classId   Int
+  class     Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  subjectId Int
+  subject   Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  title     String
+  details   String // long text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([classId, subjectId])
+}
+
+// Exam date sheet: one row per subject-exam for a class.
+model Datesheet {
+  id        Int      @id @default(autoincrement())
+  classId   Int
+  class     Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  examName  String
+  subjectId Int
+  subject   Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  examDate  DateTime
+  startTime String? // "09:00"
+  endTime   String? // "11:00"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Weekly timetable: one row per section/day/period slot.
+model Timetable {
+  id        Int      @id @default(autoincrement())
+  sectionId Int
+  section   Section  @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  dayOfWeek String // 'Monday'..'Sunday'
+  periodNo  Int
+  subjectId Int
+  subject   Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  teacherId Int?
+  teacher   User?    @relation(fields: [teacherId], references: [id])
+  startTime String? // "09:00"
+  endTime   String? // "09:45"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([sectionId, dayOfWeek, periodNo])
+}
+
+// Announcements posted by admin/teacher.
+model Notice {
+  id         Int      @id @default(autoincrement())
+  title      String
+  body       String
+  audience   String   @default("all") // 'all' | 'teachers' | 'students'
+  postedById Int?
+  postedBy   User?    @relation(fields: [postedById], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}

@@ -1,0 +1,45 @@
+@import 'tailwindcss';
+
+/*
+  Calm Professional Admin theme.
+  A clean, light, readable look built for dense tables and forms.
+  We expose the palette as CSS variables and map them into Tailwind's
+  theme via @theme so we can use classes like bg-primary / text-muted.
+*/
+@theme {
+  --color-primary: #4f46e5; /* indigo-600 — main actions, links */
+  --color-primary-dark: #4338ca; /* hover state */
+  --color-primary-light: #eef2ff; /* subtle tinted backgrounds */
+
+  --color-sidebar: #1e293b; /* slate-800 — dark side navigation */
+  --color-sidebar-hover: #334155; /* slate-700 */
+
+  --color-surface: #ffffff; /* cards / panels */
+  --color-canvas: #f1f5f9; /* app background (slate-100) */
+  --color-border: #e2e8f0; /* slate-200 — hairlines */
+
+  --color-heading: #0f172a; /* slate-900 */
+  --color-body: #334155; /* slate-700 */
+  --color-muted: #64748b; /* slate-500 — secondary text */
+
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-danger: #dc2626;
+
+  --font-sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-canvas);
+  color: var(--color-body);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
