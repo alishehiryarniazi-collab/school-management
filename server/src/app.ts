@@ -10,6 +10,9 @@ import authRoutes from './routes/auth.routes.js'
 import classRoutes from './routes/class.routes.js'
 import sectionRoutes from './routes/section.routes.js'
 import subjectRoutes from './routes/subject.routes.js'
+import teacherRoutes from './routes/teacher.routes.js'
+import studentRoutes from './routes/student.routes.js'
+import assignmentRoutes from './routes/assignment.routes.js'
 
 export function createApp() {
   const app = express()
@@ -36,7 +39,9 @@ export function createApp() {
   app.use('/api/classes', classRoutes)
   app.use('/api/sections', sectionRoutes)
   app.use('/api/subjects', subjectRoutes)
-  // app.use('/api/students', studentRoutes)  // (coming next)
+  app.use('/api/teachers', teacherRoutes)
+  app.use('/api/students', studentRoutes)
+  app.use('/api/assignments', assignmentRoutes)
 
   // Unknown route + global error handling (must be LAST).
   app.use(notFoundHandler)

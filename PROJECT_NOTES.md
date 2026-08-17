@@ -65,8 +65,13 @@ are DB rows (not hardcoded), so this scales freely. Student lists get search + f
 3. Auth (3 roles, httpOnly cookies, bcrypt, role guards) ✅ DONE
    - Staff login (email/pw), student login (sectionId+rollNo+pw), /me, logout
    - requireAuth + requireRole middleware; public school-structure for login dropdowns
-4. Admin: teachers, students, classes/sections/subjects + assign students to class ⬅️ NEXT
-5. Attendance + Notices
+4. Admin: teachers, students, classes/sections/subjects + assign students ✅ DONE
+   - classes/sections/subjects CRUD (admin), teachers CRUD (admin, deactivate not delete)
+   - students CRUD (admin+teacher), pagination+search+filter, assign-to-section,
+     reset password, auto synthetic login email, roll unique per section
+   - teaching assignments (teacher↔section↔subject), all with validation + safe deletes
+   - Verified end-to-end incl. student login with default password
+5. Attendance + Notices ⬅️ NEXT
 6. Marks + Syllabus + Date sheet + Timetable
 7. Student portal (read-only)
 8. Polish (validation, edge cases, responsive), README, deploy
