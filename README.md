@@ -32,6 +32,37 @@ Other details worth mentioning:
 - Every input is validated on the server with Zod, and deletes are guarded — you
   can't, for example, delete a class that still has students enrolled.
 
+## Screenshots
+
+**Admin dashboard**
+
+![Admin dashboard](docs/screenshots/02-dashboard.png)
+
+**Student portal (read-only)**
+
+![Student portal](docs/screenshots/06-portal.png)
+
+<details>
+<summary>More screenshots</summary>
+
+**Login (admin/teacher & student modes)**
+
+![Login](docs/screenshots/01-login.png)
+
+**Managing students**
+
+![Students](docs/screenshots/03-students.png)
+
+**Classes & sections**
+
+![Classes and sections](docs/screenshots/04-classes.png)
+
+**Marking attendance**
+
+![Attendance](docs/screenshots/05-attendance.png)
+
+</details>
+
 ## Tech stack
 
 **Frontend:** React + TypeScript, Vite, Tailwind CSS, React Router
