@@ -36,7 +36,13 @@ async function upsertUser(
   const existing = await prisma.user.findUnique({ where: { email } })
   if (existing) return existing
   return prisma.user.create({
-    data: { email, fullName, role, phone, passwordHash: await hashPassword(password) },
+    data: {
+      email,
+      fullName,
+      role,
+      phone,
+      passwordHash: await hashPassword(password),
+    },
   })
 }
 
@@ -71,7 +77,11 @@ async function main() {
   console.log(`✅ Admin: ${ADMIN_EMAIL} / ${ADMIN_PASSWORD}`)
 
   for (const name of SUBJECTS) {
-    await prisma.subject.upsert({ where: { name }, update: {}, create: { name } })
+    await prisma.subject.upsert({
+      where: { name },
+      update: {},
+      create: { name },
+    })
   }
   const subjects = await prisma.subject.findMany()
   const subj = (n: string) => subjects.find((s) => s.name === n)!
@@ -118,8 +128,20 @@ async function main() {
 
   // 4) Students
   const s1 = await ensureStudent(sec5A.id, 1, 'Ali Raza', 'male', 'Raza Khan')
-  const s2 = await ensureStudent(sec5A.id, 2, 'Sara Khan', 'female', 'Bilal Khan')
-  const s3 = await ensureStudent(sec5A.id, 3, 'Hamza Sheikh', 'male', 'Sheikh Sb')
+  const s2 = await ensureStudent(
+    sec5A.id,
+    2,
+    'Sara Khan',
+    'female',
+    'Bilal Khan'
+  )
+  const s3 = await ensureStudent(
+    sec5A.id,
+    3,
+    'Hamza Sheikh',
+    'male',
+    'Sheikh Sb'
+  )
   await ensureStudent(sec5B.id, 1, 'Ayesha Malik', 'female', 'Malik Sb')
   await ensureStudent(sec5B.id, 2, 'Usman Tariq', 'male', 'Tariq Sb')
   console.log('✅ Students (3 in 5-A, 2 in 5-B)')
@@ -189,18 +211,24 @@ async function main() {
   // 8) Syllabus, date sheet, timetable, notice
   await prisma.syllabus.upsert({
     where: {
-      classId_subjectId: { classId: class5.id, subjectId: subj('Mathematics').id },
+      classId_subjectId: {
+        classId: class5.id,
+        subjectId: subj('Mathematics').id,
+      },
     },
     update: {},
     create: {
       classId: class5.id,
       subjectId: subj('Mathematics').id,
       title: 'Term 1 — Algebra Basics',
-      details: 'Chapters 1–4: integers, fractions, simple equations, geometry intro.',
+      details:
+        'Chapters 1–4: integers, fractions, simple equations, geometry intro.',
     },
   })
 
-  const dsCount = await prisma.datesheet.count({ where: { classId: class5.id } })
+  const dsCount = await prisma.datesheet.count({
+    where: { classId: class5.id },
+  })
   if (dsCount === 0) {
     await prisma.datesheet.createMany({
       data: [
@@ -264,9 +292,13 @@ async function main() {
     })
   }
 
-  console.log('✅ Demo attendance, marks, syllabus, date sheet, timetable, notice')
+  console.log(
+    '✅ Demo attendance, marks, syllabus, date sheet, timetable, notice'
+  )
   console.log('\n🌱 Seeding complete.')
-  console.log('   Student demo login → Class 5 / Section A / Roll 2 / school123')
+  console.log(
+    '   Student demo login → Class 5 / Section A / Roll 2 / school123'
+  )
 }
 
 main()

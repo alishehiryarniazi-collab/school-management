@@ -37,9 +37,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
     throw new ApiError('Cannot reach the server. Is it running?', 0)
   }
 
-  const isJson = res.headers
-    .get('content-type')
-    ?.includes('application/json')
+  const isJson = res.headers.get('content-type')?.includes('application/json')
   const body = isJson ? await res.json() : null
 
   if (!res.ok) {

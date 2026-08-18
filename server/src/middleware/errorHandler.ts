@@ -9,7 +9,9 @@ import { isProd } from '../config/env.js'
 
 // 404 handler for unknown routes (mounted after all real routes).
 export const notFoundHandler: RequestHandler = (req, res) => {
-  res.status(404).json({ message: `Route not found: ${req.method} ${req.originalUrl}` })
+  res
+    .status(404)
+    .json({ message: `Route not found: ${req.method} ${req.originalUrl}` })
 }
 
 export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
@@ -43,7 +45,8 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
     if (err.code === 'P2003') {
       // Foreign key restrict: trying to delete something still in use.
       res.status(409).json({
-        message: 'This record is still linked to other data and cannot be deleted',
+        message:
+          'This record is still linked to other data and cannot be deleted',
       })
       return
     }

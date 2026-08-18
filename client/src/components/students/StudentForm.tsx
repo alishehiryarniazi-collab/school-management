@@ -56,7 +56,8 @@ export function StudentForm({
         fullName: fullName.trim(),
         rollNo: Number(rollNo),
         sectionId: Number(sectionId),
-        gender: (gender || undefined) as 'male' | 'female' | 'other' | undefined,
+        gender: (gender || undefined) as
+          'male' | 'female' | 'other' | undefined,
         dob: dob || undefined,
         guardianName: guardianName.trim() || undefined,
         guardianPhone: guardianPhone.trim() || undefined,

@@ -13,7 +13,10 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div className="flex flex-col gap-1">
         {label && (
-          <label htmlFor={selectId} className="text-sm font-medium text-heading">
+          <label
+            htmlFor={selectId}
+            className="text-sm font-medium text-heading"
+          >
             {label}
           </label>
         )}

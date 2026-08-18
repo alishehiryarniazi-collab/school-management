@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { homeFor } from '../components/ProtectedRoute'
+import { homeFor } from '../utils/roles'
 import { authApi } from '../services/auth.api'
 import { ApiError } from '../services/http'
 import type { ClassItem } from '../types'
@@ -59,7 +59,11 @@ export function LoginPage() {
       const loggedIn =
         mode === 'staff'
           ? await staffLogin(email.trim(), password)
-          : await studentLogin(Number(sectionId), Number(rollNo), studentPassword)
+          : await studentLogin(
+              Number(sectionId),
+              Number(rollNo),
+              studentPassword
+            )
       navigate(homeFor(loggedIn.role), { replace: true })
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Login failed')

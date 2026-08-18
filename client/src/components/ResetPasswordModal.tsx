@@ -26,7 +26,9 @@ export function ResetPasswordModal({
       await onSubmit(password)
       onClose()
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : 'Could not reset password')
+      setError(
+        err instanceof ApiError ? err.message : 'Could not reset password'
+      )
     } finally {
       setSaving(false)
     }
@@ -42,7 +44,11 @@ export function ResetPasswordModal({
           <Button variant="secondary" onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={save} loading={saving} disabled={password.length < 6}>
+          <Button
+            onClick={save}
+            loading={saving}
+            disabled={password.length < 6}
+          >
             Reset password
           </Button>
         </>

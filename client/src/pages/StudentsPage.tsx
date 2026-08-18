@@ -1,6 +1,6 @@
 // Manage students: search + class/section filters, paginated list, add/edit,
 // move (arrange into a section), reset password, activate/deactivate.
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useApi } from '../hooks/useApi'
 import { useDebounce } from '../hooks/useDebounce'
 import { classesApi } from '../services/school.api'
@@ -33,15 +33,8 @@ export function StudentsPage() {
   const classes = structure?.classes ?? []
 
   // Flat list of sections enriched with their class, for the form dropdowns.
-  const allSections: Section[] = useMemo(
-    () =>
-      classes.flatMap((c) =>
-        (c.sections ?? []).map((s) => ({
-          ...s,
-          class: { id: c.id, name: c.name },
-        }))
-      ),
-    [classes]
+  const allSections: Section[] = classes.flatMap((c) =>
+    (c.sections ?? []).map((s) => ({ ...s, class: { id: c.id, name: c.name } }))
   )
 
   // Sections available in the class-filter dropdown.
@@ -101,7 +94,11 @@ export function StudentsPage() {
         <Card className="mb-4 p-4">
           <p className="text-sm text-muted">
             You need at least one class &amp; section before adding students. Go
-            to <span className="font-medium text-heading">Classes &amp; Sections</span>.
+            to{' '}
+            <span className="font-medium text-heading">
+              Classes &amp; Sections
+            </span>
+            .
           </p>
         </Card>
       )}

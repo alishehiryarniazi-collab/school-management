@@ -48,7 +48,13 @@ export async function getAttendance(userId: number) {
   })
 
   // Summary counts + attendance percentage (present+late counts as attended).
-  const summary = { present: 0, absent: 0, late: 0, leave: 0, total: rows.length }
+  const summary = {
+    present: 0,
+    absent: 0,
+    late: 0,
+    leave: 0,
+    total: rows.length,
+  }
   for (const r of rows) summary[r.status as keyof typeof summary]++
   const attended = summary.present + summary.late
   const percentage =

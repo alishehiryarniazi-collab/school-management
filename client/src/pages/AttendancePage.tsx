@@ -1,6 +1,6 @@
 // Mark attendance: pick a class + section + date, set each student's status,
 // and save. Statuses: present / absent / late / leave.
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useApi } from '../hooks/useApi'
 import { classesApi } from '../services/school.api'
 import { attendanceApi } from '../services/attendance.api'
@@ -65,10 +65,7 @@ export function AttendancePage() {
   }, [roster])
 
   const rosterList = roster?.roster ?? []
-  const markedCount = useMemo(
-    () => rosterList.filter((r) => statuses[r.studentId]).length,
-    [rosterList, statuses]
-  )
+  const markedCount = rosterList.filter((r) => statuses[r.studentId]).length
 
   function setStatus(studentId: number, status: AttendanceStatus) {
     setStatuses((prev) => ({ ...prev, [studentId]: status }))
@@ -89,7 +86,10 @@ export function AttendancePage() {
     try {
       const records = rosterList
         .filter((r) => statuses[r.studentId])
-        .map((r) => ({ studentId: r.studentId, status: statuses[r.studentId]! }))
+        .map((r) => ({
+          studentId: r.studentId,
+          status: statuses[r.studentId]!,
+        }))
       await attendanceApi.mark(Number(sectionId), date, records)
       setSaved(true)
       reload()
@@ -210,10 +210,12 @@ export function AttendancePage() {
             </ul>
 
             <div className="flex items-center justify-end gap-3 border-t border-border px-4 py-3">
-              {saved && (
-                <span className="text-sm text-success">✓ Saved</span>
-              )}
-              <Button onClick={save} loading={saving} disabled={markedCount === 0}>
+              {saved && <span className="text-sm text-success">✓ Saved</span>}
+              <Button
+                onClick={save}
+                loading={saving}
+                disabled={markedCount === 0}
+              >
                 Save attendance
               </Button>
             </div>

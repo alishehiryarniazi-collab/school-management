@@ -19,7 +19,9 @@ export const teachersApi = {
   update: (id: number, data: Partial<TeacherInput> & { isActive?: boolean }) =>
     http.patch<{ teacher: Teacher }>(`/teachers/${id}`, data),
   resetPassword: (id: number, password: string) =>
-    http.patch<{ message: string }>(`/teachers/${id}/reset-password`, { password }),
+    http.patch<{ message: string }>(`/teachers/${id}/reset-password`, {
+      password,
+    }),
 }
 
 export interface StudentInput {
@@ -49,7 +51,12 @@ export const studentsApi = {
   update: (id: number, data: Partial<StudentInput> & { isActive?: boolean }) =>
     http.patch<{ student: Student }>(`/students/${id}`, data),
   assign: (id: number, sectionId: number, rollNo?: number) =>
-    http.patch<{ student: Student }>(`/students/${id}/assign`, { sectionId, rollNo }),
+    http.patch<{ student: Student }>(`/students/${id}/assign`, {
+      sectionId,
+      rollNo,
+    }),
   resetPassword: (id: number, password: string) =>
-    http.patch<{ message: string }>(`/students/${id}/reset-password`, { password }),
+    http.patch<{ message: string }>(`/students/${id}/reset-password`, {
+      password,
+    }),
 }

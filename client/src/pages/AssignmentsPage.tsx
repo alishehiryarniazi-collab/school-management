@@ -1,6 +1,6 @@
 // Manage teaching assignments (which teacher teaches which subject in which
 // section). Admin only.
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useApi } from '../hooks/useApi'
 import { classesApi, subjectsApi, assignmentsApi } from '../services/school.api'
 import { teachersApi } from '../services/people.api'
@@ -119,7 +119,10 @@ function AssignmentForm({
   onSaved: () => void
 }) {
   const { data: structure } = useApi(() => classesApi.list(), [])
-  const { data: teacherData } = useApi(() => teachersApi.list({ limit: 100 }), [])
+  const { data: teacherData } = useApi(
+    () => teachersApi.list({ limit: 100 }),
+    []
+  )
   const { data: subjectData } = useApi(() => subjectsApi.list(), [])
 
   const classes = structure?.classes ?? []
@@ -127,15 +130,8 @@ function AssignmentForm({
   const subjects = subjectData?.subjects ?? []
 
   // Flatten sections with their class name for a single dropdown.
-  const sections: Section[] = useMemo(
-    () =>
-      classes.flatMap((c) =>
-        (c.sections ?? []).map((s) => ({
-          ...s,
-          class: { id: c.id, name: c.name },
-        }))
-      ),
-    [classes]
+  const sections: Section[] = classes.flatMap((c) =>
+    (c.sections ?? []).map((s) => ({ ...s, class: { id: c.id, name: c.name } }))
   )
 
   const [teacherId, setTeacherId] = useState<number | ''>('')

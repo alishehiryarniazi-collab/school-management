@@ -53,7 +53,11 @@ export function AssignSectionModal({
           <Button variant="secondary" onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={save} loading={saving} disabled={!sectionId || !rollNo}>
+          <Button
+            onClick={save}
+            loading={saving}
+            disabled={!sectionId || !rollNo}
+          >
             Move student
           </Button>
         </>

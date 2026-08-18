@@ -24,9 +24,10 @@ export function ClassesPage() {
   )
   const teachers = teacherData?.data ?? []
 
-  const [classForm, setClassForm] = useState<{ open: boolean; item: ClassItem | null }>(
-    { open: false, item: null }
-  )
+  const [classForm, setClassForm] = useState<{
+    open: boolean
+    item: ClassItem | null
+  }>({ open: false, item: null })
   const [sectionForm, setSectionForm] = useState<{
     cls: ClassItem
     section: Section | null

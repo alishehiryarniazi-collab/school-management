@@ -11,9 +11,7 @@ const envSchema = z.object({
     .enum(['development', 'production', 'test'])
     .default('development'),
   CLIENT_URL: z.string().url().default('http://localhost:5173'),
-  JWT_SECRET: z
-    .string()
-    .min(16, 'JWT_SECRET must be at least 16 characters'),
+  JWT_SECRET: z.string().min(16, 'JWT_SECRET must be at least 16 characters'),
   JWT_EXPIRES_IN: z.string().default('7d'),
   DEFAULT_STUDENT_PASSWORD: z.string().min(4).default('school123'),
 })

@@ -21,7 +21,11 @@ const teacherSelect = {
 } satisfies Prisma.UserSelect
 
 // Paginated list with optional name/email search.
-export async function listTeachers(page: number, limit: number, search?: string) {
+export async function listTeachers(
+  page: number,
+  limit: number,
+  search?: string
+) {
   const where: Prisma.UserWhereInput = {
     role: 'teacher',
     ...(search

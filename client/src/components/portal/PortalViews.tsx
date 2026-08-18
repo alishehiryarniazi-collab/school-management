@@ -15,12 +15,13 @@ function fmtDate(iso: string) {
   })
 }
 
-const statusTone: Record<string, 'success' | 'danger' | 'primary' | 'neutral'> = {
-  present: 'success',
-  absent: 'danger',
-  late: 'primary',
-  leave: 'neutral',
-}
+const statusTone: Record<string, 'success' | 'danger' | 'primary' | 'neutral'> =
+  {
+    present: 'success',
+    absent: 'danger',
+    late: 'primary',
+    leave: 'neutral',
+  }
 
 // ---- Attendance ----
 export function AttendanceView() {
@@ -147,7 +148,8 @@ export function TimetableView() {
   if (loading) return <LoadingState />
   if (error) return <ErrorState message={error} onRetry={reload} />
   const slots = data?.timetable ?? []
-  if (slots.length === 0) return <EmptyState title="No timetable published yet" />
+  if (slots.length === 0)
+    return <EmptyState title="No timetable published yet" />
 
   // Group by day, ordered Mon..Sun.
   const byDay = new Map<string, TimetableSlot[]>()
@@ -201,7 +203,8 @@ export function DatesheetView() {
   if (loading) return <LoadingState />
   if (error) return <ErrorState message={error} onRetry={reload} />
   const entries = data?.datesheet ?? []
-  if (entries.length === 0) return <EmptyState title="No date sheet published yet" />
+  if (entries.length === 0)
+    return <EmptyState title="No date sheet published yet" />
 
   return (
     <Card>
@@ -240,7 +243,8 @@ export function SyllabusView() {
   if (loading) return <LoadingState />
   if (error) return <ErrorState message={error} onRetry={reload} />
   const items = data?.syllabus ?? []
-  if (items.length === 0) return <EmptyState title="No syllabus published yet" />
+  if (items.length === 0)
+    return <EmptyState title="No syllabus published yet" />
 
   return (
     <div className="space-y-3">

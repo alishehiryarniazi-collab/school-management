@@ -93,7 +93,8 @@ export function NoticesPage() {
                   {n.body}
                 </p>
                 <p className="mt-2 text-xs text-muted">
-                  {n.postedBy?.fullName ?? 'Unknown'} • {formatDate(n.createdAt)}
+                  {n.postedBy?.fullName ?? 'Unknown'} •{' '}
+                  {formatDate(n.createdAt)}
                 </p>
               </div>
               {canManage(n) && (

@@ -31,10 +31,7 @@ export async function listTimetable(sectionId: number) {
   return { section, slots }
 }
 
-async function assertRefs(
-  subjectId: number,
-  teacherId?: number | null
-) {
+async function assertRefs(subjectId: number, teacherId?: number | null) {
   const subject = await prisma.subject.findUnique({ where: { id: subjectId } })
   if (!subject) throw badRequest('Selected subject does not exist')
   if (teacherId) {

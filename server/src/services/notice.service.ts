@@ -28,7 +28,10 @@ export async function listNoticesForStudents() {
   })
 }
 
-export async function createNotice(data: CreateNoticeInput, postedById: number) {
+export async function createNotice(
+  data: CreateNoticeInput,
+  postedById: number
+) {
   return prisma.notice.create({
     data: { ...data, postedById },
     include: noticeInclude,

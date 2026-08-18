@@ -103,7 +103,11 @@ export function DatesheetPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Button variant="ghost" size="sm" onClick={() => setEditing(e)}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setEditing(e)}
+                  >
                     <IconEdit />
                   </Button>
                   <Button
@@ -156,7 +160,9 @@ function DatesheetForm({
 
   const [classId, setClassId] = useState<number | ''>(entry?.classId ?? '')
   const [examName, setExamName] = useState(entry?.examName ?? '')
-  const [subjectId, setSubjectId] = useState<number | ''>(entry?.subjectId ?? '')
+  const [subjectId, setSubjectId] = useState<number | ''>(
+    entry?.subjectId ?? ''
+  )
   const [examDate, setExamDate] = useState(entry?.examDate?.slice(0, 10) ?? '')
   const [startTime, setStartTime] = useState(entry?.startTime ?? '')
   const [endTime, setEndTime] = useState(entry?.endTime ?? '')
@@ -184,8 +190,7 @@ function DatesheetForm({
     }
   }
 
-  const canSave =
-    examName.trim() && subjectId && examDate && (entry || classId)
+  const canSave = examName.trim() && subjectId && examDate && (entry || classId)
 
   return (
     <Modal

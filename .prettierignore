@@ -1,0 +1,8 @@
+node_modules
+dist
+build
+_DELETE_ME
+server/generated
+server/prisma/migrations
+*.db
+package-lock.json

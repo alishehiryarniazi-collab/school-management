@@ -71,7 +71,10 @@ export function SyllabusPage() {
       {error && <ErrorState message={error} onRetry={reload} />}
       {!loading && !error && items.length === 0 && (
         <Card>
-          <EmptyState title="No syllabus yet" hint="Add the first syllabus entry." />
+          <EmptyState
+            title="No syllabus yet"
+            hint="Add the first syllabus entry."
+          />
         </Card>
       )}
 
@@ -140,7 +143,9 @@ function SyllabusForm({
   const { data: subjectData } = useApi(() => subjectsApi.list(), [])
   const subjects = subjectData?.subjects ?? []
   const [classId, setClassId] = useState<number | ''>(entry?.classId ?? '')
-  const [subjectId, setSubjectId] = useState<number | ''>(entry?.subjectId ?? '')
+  const [subjectId, setSubjectId] = useState<number | ''>(
+    entry?.subjectId ?? ''
+  )
   const [title, setTitle] = useState(entry?.title ?? '')
   const [details, setDetails] = useState(entry?.details ?? '')
   const [error, setError] = useState<string | null>(null)

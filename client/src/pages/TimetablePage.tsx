@@ -37,9 +37,7 @@ export function TimetablePage() {
 
   const { data, loading, error, reload } = useApi(
     () =>
-      sectionId
-        ? timetableApi.list(Number(sectionId))
-        : Promise.resolve(null),
+      sectionId ? timetableApi.list(Number(sectionId)) : Promise.resolve(null),
     [sectionId]
   )
   const slots = data?.slots ?? []
@@ -115,7 +113,10 @@ export function TimetablePage() {
       {sectionId && error && <ErrorState message={error} onRetry={reload} />}
       {sectionId && !loading && !error && slots.length === 0 && (
         <Card>
-          <EmptyState title="No slots yet" hint="Add the first timetable slot." />
+          <EmptyState
+            title="No slots yet"
+            hint="Add the first timetable slot."
+          />
         </Card>
       )}
 
@@ -194,7 +195,10 @@ function TimetableForm({
   onSaved: () => void
 }) {
   const { data: subjectData } = useApi(() => subjectsApi.list(), [])
-  const { data: teacherData } = useApi(() => teachersApi.list({ limit: 100 }), [])
+  const { data: teacherData } = useApi(
+    () => teachersApi.list({ limit: 100 }),
+    []
+  )
   const subjects = subjectData?.subjects ?? []
   const teachers = teacherData?.data ?? []
 

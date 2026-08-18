@@ -9,7 +9,8 @@ export interface NoticeInput {
 
 export const noticesApi = {
   list: () => http.get<{ notices: Notice[] }>('/notices'),
-  create: (data: NoticeInput) => http.post<{ notice: Notice }>('/notices', data),
+  create: (data: NoticeInput) =>
+    http.post<{ notice: Notice }>('/notices', data),
   update: (id: number, data: Partial<NoticeInput>) =>
     http.patch<{ notice: Notice }>(`/notices/${id}`, data),
   remove: (id: number) => http.del<{ message: string }>(`/notices/${id}`),

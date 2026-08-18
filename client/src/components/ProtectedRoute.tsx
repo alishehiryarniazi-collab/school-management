@@ -6,11 +6,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import type { Role } from '../types'
 import { LoadingState } from './ui/States'
-
-// Where each role goes by default.
-export function homeFor(role: Role): string {
-  return role === 'student' ? '/portal' : '/'
-}
+import { homeFor } from '../utils/roles'
 
 export function ProtectedRoute({
   roles,

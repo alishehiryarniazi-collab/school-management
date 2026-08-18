@@ -1,7 +1,10 @@
 // Business logic for classes (e.g. "Class 5").
 import { prisma } from '../config/prisma.js'
 import { notFound, conflict } from '../utils/AppError.js'
-import type { CreateClassInput, UpdateClassInput } from '../validators/class.validators.js'
+import type {
+  CreateClassInput,
+  UpdateClassInput,
+} from '../validators/class.validators.js'
 
 // List all classes with their sections and a student count per section.
 export async function listClasses() {

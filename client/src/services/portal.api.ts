@@ -15,7 +15,9 @@ export const portalApi = {
   attendance: () => http.get<AttendanceSummary>('/portal/attendance'),
   marks: () => http.get<{ marks: PortalMark[] }>('/portal/marks'),
   syllabus: () => http.get<{ syllabus: SyllabusEntry[] }>('/portal/syllabus'),
-  datesheet: () => http.get<{ datesheet: DatesheetEntry[] }>('/portal/datesheet'),
-  timetable: () => http.get<{ timetable: TimetableSlot[] }>('/portal/timetable'),
+  datesheet: () =>
+    http.get<{ datesheet: DatesheetEntry[] }>('/portal/datesheet'),
+  timetable: () =>
+    http.get<{ timetable: TimetableSlot[] }>('/portal/timetable'),
   notices: () => http.get<{ notices: Notice[] }>('/portal/notices'),
 }

@@ -80,12 +80,15 @@ export function MarksPage() {
     setSaving(true)
     try {
       const records = rosterList
-        .filter((r) => scores[r.studentId] !== undefined && scores[r.studentId] !== '')
+        .filter(
+          (r) => scores[r.studentId] !== undefined && scores[r.studentId] !== ''
+        )
         .map((r) => ({
           studentId: r.studentId,
           marksObtained: Number(scores[r.studentId]),
         }))
-      if (records.length === 0) throw new ApiError('Enter at least one mark', 400)
+      if (records.length === 0)
+        throw new ApiError('Enter at least one mark', 400)
       await marksApi.save({
         sectionId: Number(sectionId),
         subjectId: Number(subjectId),
@@ -104,7 +107,10 @@ export function MarksPage() {
 
   return (
     <div>
-      <PageHeader title="Marks" subtitle="Enter exam marks for a class section." />
+      <PageHeader
+        title="Marks"
+        subtitle="Enter exam marks for a class section."
+      />
 
       <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
         <Select

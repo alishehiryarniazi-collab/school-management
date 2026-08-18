@@ -3,7 +3,11 @@
 import type { Request, Response } from 'express'
 import type { User } from '@prisma/client'
 import { signToken } from '../utils/jwt.js'
-import { AUTH_COOKIE, authCookieOptions, clearCookieOptions } from '../utils/cookies.js'
+import {
+  AUTH_COOKIE,
+  authCookieOptions,
+  clearCookieOptions,
+} from '../utils/cookies.js'
 import {
   staffLoginSchema,
   studentLoginSchema,

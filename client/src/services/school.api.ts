@@ -5,7 +5,8 @@ import type { ClassItem, Section, Subject, Assignment } from '../types'
 
 export const classesApi = {
   list: () => http.get<{ classes: ClassItem[] }>('/classes'),
-  create: (name: string) => http.post<{ class: ClassItem }>('/classes', { name }),
+  create: (name: string) =>
+    http.post<{ class: ClassItem }>('/classes', { name }),
   update: (id: number, name: string) =>
     http.patch<{ class: ClassItem }>(`/classes/${id}`, { name }),
   remove: (id: number) => http.del<{ message: string }>(`/classes/${id}`),
@@ -39,13 +40,19 @@ export const subjectsApi = {
 }
 
 export const assignmentsApi = {
-  list: (filter?: { teacherId?: number; sectionId?: number; subjectId?: number }) => {
+  list: (filter?: {
+    teacherId?: number
+    sectionId?: number
+    subjectId?: number
+  }) => {
     const sp = new URLSearchParams()
     if (filter?.teacherId) sp.set('teacherId', String(filter.teacherId))
     if (filter?.sectionId) sp.set('sectionId', String(filter.sectionId))
     if (filter?.subjectId) sp.set('subjectId', String(filter.subjectId))
     const q = sp.toString()
-    return http.get<{ assignments: Assignment[] }>(`/assignments${q ? `?${q}` : ''}`)
+    return http.get<{ assignments: Assignment[] }>(
+      `/assignments${q ? `?${q}` : ''}`
+    )
   },
   create: (data: { teacherId: number; sectionId: number; subjectId: number }) =>
     http.post<{ assignment: Assignment }>('/assignments', data),
