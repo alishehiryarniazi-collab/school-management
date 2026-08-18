@@ -12,7 +12,8 @@ import { ClassesPage } from './pages/ClassesPage'
 import { StudentsPage } from './pages/StudentsPage'
 import { AttendancePage } from './pages/AttendancePage'
 import { NoticesPage } from './pages/NoticesPage'
-import { Placeholder, StudentPortalPage } from './pages/Placeholder'
+import { StudentPortalPage } from './pages/StudentPortalPage'
+import { Placeholder } from './pages/Placeholder'
 
 export default function App() {
   return (

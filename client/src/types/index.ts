@@ -88,6 +88,64 @@ export interface Notice {
   postedBy?: { id: number; fullName: string; role: Role } | null
 }
 
+// ---- Student portal ----
+export interface StudentProfile {
+  id: number
+  fullName: string
+  rollNo: number
+  gender: string | null
+  className: string
+  sectionName: string
+  classTeacher: string | null
+}
+
+export interface AttendanceSummary {
+  summary: {
+    present: number
+    absent: number
+    late: number
+    leave: number
+    total: number
+  }
+  percentage: number
+  records: { date: string; status: AttendanceStatus }[]
+}
+
+export interface PortalMark {
+  id: number
+  examName: string
+  marksObtained: number
+  totalMarks: number
+  subject: { id: number; name: string }
+}
+
+export interface SyllabusEntry {
+  id: number
+  title: string
+  details: string
+  classId?: number
+  subject: { id: number; name: string }
+}
+
+export interface DatesheetEntry {
+  id: number
+  examName: string
+  examDate: string
+  startTime: string | null
+  endTime: string | null
+  subject: { id: number; name: string }
+}
+
+export interface TimetableSlot {
+  id: number
+  dayOfWeek: string
+  periodNo: number
+  startTime: string | null
+  endTime: string | null
+  subject: { id: number; name: string }
+  teacher: { id: number; fullName: string } | null
+}
+
 export interface Pagination {
   page: number
   limit: number
