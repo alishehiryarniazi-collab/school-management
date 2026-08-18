@@ -34,20 +34,13 @@ Other details worth mentioning:
 
 ## Screenshots
 
+**Login — admin/teacher and student modes**
+
+![Login](docs/screenshots/01-login.png)
+
 **Admin dashboard**
 
 ![Admin dashboard](docs/screenshots/02-dashboard.png)
-
-**Student portal (read-only)**
-
-![Student portal](docs/screenshots/06-portal.png)
-
-<details>
-<summary>More screenshots</summary>
-
-**Login (admin/teacher & student modes)**
-
-![Login](docs/screenshots/01-login.png)
 
 **Managing students**
 
@@ -61,7 +54,9 @@ Other details worth mentioning:
 
 ![Attendance](docs/screenshots/05-attendance.png)
 
-</details>
+**Student portal (read-only)**
+
+![Student portal](docs/screenshots/06-portal.png)
 
 ## Tech stack
 
