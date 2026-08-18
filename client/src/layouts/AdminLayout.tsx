@@ -11,6 +11,8 @@ import {
   IconLayers,
   IconBook,
   IconLink,
+  IconCheckSquare,
+  IconBell,
   IconLogout,
   IconMenu,
   IconClose,
@@ -26,7 +28,9 @@ interface NavItem {
 // Nav items are filtered by the current user's role.
 const NAV: NavItem[] = [
   { to: '/', label: 'Dashboard', icon: IconHome, roles: ['admin', 'teacher'] },
+  { to: '/attendance', label: 'Attendance', icon: IconCheckSquare, roles: ['admin', 'teacher'] },
   { to: '/students', label: 'Students', icon: IconGraduation, roles: ['admin', 'teacher'] },
+  { to: '/notices', label: 'Notices', icon: IconBell, roles: ['admin', 'teacher'] },
   { to: '/teachers', label: 'Teachers', icon: IconUsers, roles: ['admin'] },
   { to: '/classes', label: 'Classes & Sections', icon: IconLayers, roles: ['admin'] },
   { to: '/subjects', label: 'Subjects', icon: IconBook, roles: ['admin'] },

@@ -75,8 +75,12 @@ are DB rows (not hardcoded), so this scales freely. Student lists get search + f
      theme + UI kit, login (staff+student), dashboard (live stats), and full
      CRUD pages for Subjects, Teachers, Classes/Sections, Students (search,
      filters, pagination, assign/move). Verified in-browser incl. create flow.
-5. Attendance + Notices ⬅️ NEXT (backend + UI)
-6. Marks + Syllabus + Date sheet + Timetable (backend + UI)
+5. Attendance + Notices ✅ DONE (backend + UI)
+   - Attendance: per-section roster by date, bulk mark (present/absent/late/leave),
+     dates normalized to midnight UTC, one row per student per day
+   - Notices: CRUD with audience (all/teachers/students); edit/delete by admin or poster
+   - UI: Attendance page (roster + status picker + save), Notices page (cards + form)
+6. Marks + Syllabus + Date sheet + Timetable (backend + UI) ⬅️ NEXT
 7. Student portal (read-only)
 8. Polish (validation, edge cases, responsive), README, deploy
 

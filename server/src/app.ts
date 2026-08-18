@@ -13,6 +13,8 @@ import subjectRoutes from './routes/subject.routes.js'
 import teacherRoutes from './routes/teacher.routes.js'
 import studentRoutes from './routes/student.routes.js'
 import assignmentRoutes from './routes/assignment.routes.js'
+import attendanceRoutes from './routes/attendance.routes.js'
+import noticeRoutes from './routes/notice.routes.js'
 
 export function createApp() {
   const app = express()
@@ -42,6 +44,8 @@ export function createApp() {
   app.use('/api/teachers', teacherRoutes)
   app.use('/api/students', studentRoutes)
   app.use('/api/assignments', assignmentRoutes)
+  app.use('/api/attendance', attendanceRoutes)
+  app.use('/api/notices', noticeRoutes)
 
   // Unknown route + global error handling (must be LAST).
   app.use(notFoundHandler)

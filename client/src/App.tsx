@@ -10,6 +10,8 @@ import { SubjectsPage } from './pages/SubjectsPage'
 import { TeachersPage } from './pages/TeachersPage'
 import { ClassesPage } from './pages/ClassesPage'
 import { StudentsPage } from './pages/StudentsPage'
+import { AttendancePage } from './pages/AttendancePage'
+import { NoticesPage } from './pages/NoticesPage'
 import { Placeholder, StudentPortalPage } from './pages/Placeholder'
 
 export default function App() {
@@ -28,7 +30,9 @@ export default function App() {
             }
           >
             <Route path="/" element={<DashboardPage />} />
+            <Route path="/attendance" element={<AttendancePage />} />
             <Route path="/students" element={<StudentsPage />} />
+            <Route path="/notices" element={<NoticesPage />} />
 
             {/* Admin-only routes */}
             <Route

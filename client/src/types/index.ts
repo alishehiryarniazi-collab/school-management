@@ -63,6 +63,31 @@ export interface Assignment {
   section: { id: number; name: string; class: { id: number; name: string } }
 }
 
+export type AttendanceStatus = 'present' | 'absent' | 'late' | 'leave'
+
+export interface RosterEntry {
+  studentId: number
+  rollNo: number
+  fullName: string
+  status: AttendanceStatus | null
+}
+
+export interface AttendanceRoster {
+  section: { id: number; name: string; class: { id: number; name: string } }
+  date: string
+  roster: RosterEntry[]
+}
+
+export interface Notice {
+  id: number
+  title: string
+  body: string
+  audience: 'all' | 'teachers' | 'students'
+  postedById: number | null
+  createdAt: string
+  postedBy?: { id: number; fullName: string; role: Role } | null
+}
+
 export interface Pagination {
   page: number
   limit: number
