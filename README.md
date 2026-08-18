@@ -164,6 +164,26 @@ section. Everything a student sees is filtered by that section/class.
 - "Promote to next class" at year end
 - Fees / accounting
 
+## About me
+
+Hi, I'm Ali Sharyar Khan — from Faisalabad, Pakistan. I'm learning full-stack
+development the hard way: by building actual products instead of just following
+tutorials. Most of my time goes into React and Node.js, and I care more about
+writing apps that stay clean and don't break after a week than about collecting
+buzzwords.
+
+My main project is [FarmLink.AI](https://github.com/alishehiryarniazi-collab/farmers-app)
+— a platform where farmers scan their crops for disease with AI and sell produce
+directly to buyers (Next.js on the front, Node/Express + PostgreSQL on the back).
+This School Management System is another build in the same spirit — me learning
+in public. I know I'm early in the journey, but I show up every day.
+
+Working with: JavaScript, TypeScript, React, Next.js, Node.js, Express, PostgreSQL.
+
+If you're building something interesting, or have advice for someone still
+figuring it out, I'd genuinely like to hear from you — alishehiryarniazi@gmail.com
+
 ## License
 
 MIT
+
