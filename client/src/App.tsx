@@ -12,8 +12,12 @@ import { ClassesPage } from './pages/ClassesPage'
 import { StudentsPage } from './pages/StudentsPage'
 import { AttendancePage } from './pages/AttendancePage'
 import { NoticesPage } from './pages/NoticesPage'
+import { MarksPage } from './pages/MarksPage'
+import { SyllabusPage } from './pages/SyllabusPage'
+import { DatesheetPage } from './pages/DatesheetPage'
+import { TimetablePage } from './pages/TimetablePage'
+import { AssignmentsPage } from './pages/AssignmentsPage'
 import { StudentPortalPage } from './pages/StudentPortalPage'
-import { Placeholder } from './pages/Placeholder'
 
 export default function App() {
   return (
@@ -32,7 +36,11 @@ export default function App() {
           >
             <Route path="/" element={<DashboardPage />} />
             <Route path="/attendance" element={<AttendancePage />} />
+            <Route path="/marks" element={<MarksPage />} />
             <Route path="/students" element={<StudentsPage />} />
+            <Route path="/timetable" element={<TimetablePage />} />
+            <Route path="/datesheet" element={<DatesheetPage />} />
+            <Route path="/syllabus" element={<SyllabusPage />} />
             <Route path="/notices" element={<NoticesPage />} />
 
             {/* Admin-only routes */}
@@ -64,7 +72,7 @@ export default function App() {
               path="/assignments"
               element={
                 <ProtectedRoute roles={['admin']}>
-                  <Placeholder title="Assignments" />
+                  <AssignmentsPage />
                 </ProtectedRoute>
               }
             />

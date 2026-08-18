@@ -124,7 +124,9 @@ export interface SyllabusEntry {
   title: string
   details: string
   classId?: number
+  subjectId?: number
   subject: { id: number; name: string }
+  class?: { id: number; name: string }
 }
 
 export interface DatesheetEntry {
@@ -133,7 +135,10 @@ export interface DatesheetEntry {
   examDate: string
   startTime: string | null
   endTime: string | null
+  classId?: number
+  subjectId?: number
   subject: { id: number; name: string }
+  class?: { id: number; name: string }
 }
 
 export interface TimetableSlot {
@@ -142,8 +147,25 @@ export interface TimetableSlot {
   periodNo: number
   startTime: string | null
   endTime: string | null
+  subjectId?: number
+  teacherId?: number | null
   subject: { id: number; name: string }
   teacher: { id: number; fullName: string } | null
+}
+
+export interface MarksRosterEntry {
+  studentId: number
+  rollNo: number
+  fullName: string
+  marksObtained: number | null
+  totalMarks: number | null
+}
+
+export interface MarksRoster {
+  section: { id: number; name: string; class: { id: number; name: string } }
+  subjectId: number
+  examName: string
+  roster: MarksRosterEntry[]
 }
 
 export interface Pagination {

@@ -132,3 +132,32 @@ export const IconBell = (p: IconProps) => (
     <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
   </svg>
 )
+
+export const IconClipboard = (p: IconProps) => (
+  <svg {...base(p)}>
+    <rect x="8" y="3" width="8" height="4" rx="1" />
+    <path d="M8 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+    <path d="M9 12h6M9 16h4" />
+  </svg>
+)
+
+export const IconCalendar = (p: IconProps) => (
+  <svg {...base(p)}>
+    <rect x="3" y="4" width="18" height="18" rx="2" />
+    <path d="M3 10h18M8 2v4M16 2v4" />
+  </svg>
+)
+
+export const IconGrid = (p: IconProps) => (
+  <svg {...base(p)}>
+    <rect x="3" y="3" width="18" height="18" rx="2" />
+    <path d="M3 9h18M3 15h18M9 3v18M15 3v18" />
+  </svg>
+)
+
+export const IconFileText = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z" />
+    <path d="M14 3v5h5M9 13h6M9 17h6" />
+  </svg>
+)
