@@ -80,14 +80,23 @@ are DB rows (not hardcoded), so this scales freely. Student lists get search + f
      dates normalized to midnight UTC, one row per student per day
    - Notices: CRUD with audience (all/teachers/students); edit/delete by admin or poster
    - UI: Attendance page (roster + status picker + save), Notices page (cards + form)
-6. Marks + Syllabus + Date sheet + Timetable — BACKEND ✅ DONE, UI ⬅️ NEXT
-   - Marks (per section+subject+exam), Syllabus (per class+subject),
-     Datesheet (per class), Timetable (per section) — all full CRUD + validation
-7. Student portal (read-only) — BACKEND ✅ DONE (/api/portal/*), UI ⬅️ NEXT
+6. Marks + Syllabus + Date sheet + Timetable — ✅ DONE (backend + UI)
+   - Marks entry page, Syllabus/Datesheet/Timetable CRUD pages
+7. Student portal (read-only) — ✅ DONE (backend + UI)
    - profile, attendance summary+%, marks, syllabus, datesheet, timetable, notices
-8. Polish (validation, edge cases, responsive), README, deploy
+   - Also: Teaching Assignments admin UI added
+8. Polish (validation, edge cases, responsive), README, deploy ⬅️ NEXT
 
-** BACKEND IS FEATURE-COMPLETE for v1. Remaining: content UIs + student portal UI, then polish/deploy. **
+** v1 IS FEATURE-COMPLETE. All pages built and verified in the browser.
+   Remaining: final polish pass, README, and free deploy. **
+
+## Demo data currently in dev.db
+- Admin: admin@school.com / admin123
+- Teacher: Sir Ahmed (ahmed@school.com / teacher123)
+- Class 5 with sections A & B; Students: Sara Khan (5-A, roll 2), Ali Raza (5-B, roll 1)
+- Student login e.g. Sara: Class 5 / Section A / roll 2 / school123
+- Sample marks, syllabus, datesheet, timetable, notice all present
+- Reset anytime with: cd server && npm run db:reset (re-runs migration + seed)
 
 **Phase 2 (later)**
 - Bulk-add students by Excel/CSV (with template download + preview + row validation)
