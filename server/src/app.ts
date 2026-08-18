@@ -15,6 +15,11 @@ import studentRoutes from './routes/student.routes.js'
 import assignmentRoutes from './routes/assignment.routes.js'
 import attendanceRoutes from './routes/attendance.routes.js'
 import noticeRoutes from './routes/notice.routes.js'
+import markRoutes from './routes/mark.routes.js'
+import syllabusRoutes from './routes/syllabus.routes.js'
+import datesheetRoutes from './routes/datesheet.routes.js'
+import timetableRoutes from './routes/timetable.routes.js'
+import portalRoutes from './routes/portal.routes.js'
 
 export function createApp() {
   const app = express()
@@ -46,6 +51,11 @@ export function createApp() {
   app.use('/api/assignments', assignmentRoutes)
   app.use('/api/attendance', attendanceRoutes)
   app.use('/api/notices', noticeRoutes)
+  app.use('/api/marks', markRoutes)
+  app.use('/api/syllabus', syllabusRoutes)
+  app.use('/api/datesheet', datesheetRoutes)
+  app.use('/api/timetable', timetableRoutes)
+  app.use('/api/portal', portalRoutes)
 
   // Unknown route + global error handling (must be LAST).
   app.use(notFoundHandler)

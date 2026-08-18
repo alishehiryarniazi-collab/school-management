@@ -80,9 +80,14 @@ are DB rows (not hardcoded), so this scales freely. Student lists get search + f
      dates normalized to midnight UTC, one row per student per day
    - Notices: CRUD with audience (all/teachers/students); edit/delete by admin or poster
    - UI: Attendance page (roster + status picker + save), Notices page (cards + form)
-6. Marks + Syllabus + Date sheet + Timetable (backend + UI) ⬅️ NEXT
-7. Student portal (read-only)
+6. Marks + Syllabus + Date sheet + Timetable — BACKEND ✅ DONE, UI ⬅️ NEXT
+   - Marks (per section+subject+exam), Syllabus (per class+subject),
+     Datesheet (per class), Timetable (per section) — all full CRUD + validation
+7. Student portal (read-only) — BACKEND ✅ DONE (/api/portal/*), UI ⬅️ NEXT
+   - profile, attendance summary+%, marks, syllabus, datesheet, timetable, notices
 8. Polish (validation, edge cases, responsive), README, deploy
+
+** BACKEND IS FEATURE-COMPLETE for v1. Remaining: content UIs + student portal UI, then polish/deploy. **
 
 **Phase 2 (later)**
 - Bulk-add students by Excel/CSV (with template download + preview + row validation)
