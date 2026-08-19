@@ -85,7 +85,11 @@ are DB rows (not hardcoded), so this scales freely. Student lists get search + f
 7. Student portal (read-only) — ✅ DONE (backend + UI)
    - profile, attendance summary+%, marks, syllabus, datesheet, timetable, notices
    - Also: Teaching Assignments admin UI added
-8. Polish (validation, edge cases, responsive), README, deploy ⬅️ NEXT
+8. Polish (validation, edge cases, responsive), README ✅ DONE
+9. Offline / LAN mode ✅ DONE — Express serves the built React app + API from one
+   port; runs on one PC, others use it over local WiFi. Launchers: setup.bat,
+   start-app.bat, stop-app.bat + HOW-TO-RUN.md. Cookies via COOKIE_SECURE env
+   (false for HTTP/LAN). Online deploy still optional/pending.
 
 ** v1 IS FEATURE-COMPLETE. All pages built and verified in the browser.
    Remaining: final polish pass, README, and free deploy. **

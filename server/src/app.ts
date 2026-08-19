@@ -4,6 +4,9 @@
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import path from 'node:path'
+import fs from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { env } from './config/env.js'
 import { notFoundHandler, errorHandler } from './middleware/errorHandler.js'
 import authRoutes from './routes/auth.routes.js'
@@ -56,6 +59,22 @@ export function createApp() {
   app.use('/api/datesheet', datesheetRoutes)
   app.use('/api/timetable', timetableRoutes)
   app.use('/api/portal', portalRoutes)
+
+  // --- Serve the built React app (single-server / offline mode) ---
+  // When the client has been built (client/dist exists), Express serves it so
+  // the whole app + API run from ONE address/port. In dev the build is absent
+  // and the Vite dev server handles the UI instead.
+  const clientDist = path.resolve(
+    path.dirname(fileURLToPath(import.meta.url)),
+    '../../client/dist'
+  )
+  if (fs.existsSync(path.join(clientDist, 'index.html'))) {
+    app.use(express.static(clientDist))
+    // SPA fallback: any non-API GET returns index.html so client-side routing works.
+    app.get(/^\/(?!api\/).*/, (_req, res) => {
+      res.sendFile(path.join(clientDist, 'index.html'))
+    })
+  }
 
   // Unknown route + global error handling (must be LAST).
   app.use(notFoundHandler)

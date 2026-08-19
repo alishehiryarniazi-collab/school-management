@@ -103,6 +103,14 @@ Open http://localhost:5173 and log in.
 
 > Please change the admin password after first login on any real deployment.
 
+## Running it offline in a school (no internet, no hosting)
+
+The app can run on one computer and be used by everyone else over the local WiFi —
+no deployment or internet needed. On Windows: run `setup.bat` once, then
+double-click `start-app.bat` and open the address it prints. In this mode Express
+serves the built React app and the API from a single port. Full step-by-step
+instructions are in **[HOW-TO-RUN.md](HOW-TO-RUN.md)**.
+
 ## Project structure
 
 ```

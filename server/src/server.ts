@@ -1,7 +1,20 @@
 // Entry point: starts the HTTP server and handles graceful shutdown.
+import os from 'node:os'
 import { createApp } from './app.js'
 import { env } from './config/env.js'
 import { prisma } from './config/prisma.js'
+
+// Find this computer's LAN IPv4 addresses (so others on the same WiFi can connect).
+function lanAddresses(): string[] {
+  const nets = os.networkInterfaces()
+  const addrs: string[] = []
+  for (const iface of Object.values(nets)) {
+    for (const net of iface ?? []) {
+      if (net.family === 'IPv4' && !net.internal) addrs.push(net.address)
+    }
+  }
+  return addrs
+}
 
 async function main() {
   // Fail fast if the database isn't reachable.
@@ -10,8 +23,16 @@ async function main() {
 
   const app = createApp()
   const server = app.listen(env.PORT, () => {
-    console.log(`🚀 Server running at http://localhost:${env.PORT}`)
-    console.log(`   Health check: http://localhost:${env.PORT}/api/health`)
+    console.log('\n========================================')
+    console.log('  School Management System is running')
+    console.log('========================================')
+    console.log(`  On this computer:  http://localhost:${env.PORT}`)
+    for (const ip of lanAddresses()) {
+      console.log(`  On the same WiFi:  http://${ip}:${env.PORT}`)
+    }
+    console.log('========================================')
+    console.log('  Keep this window open while in use.')
+    console.log('  Close it (or run stop-app) to stop.\n')
   })
 
   // Close DB connection cleanly on shutdown (Ctrl+C, deploy restarts).

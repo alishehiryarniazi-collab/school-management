@@ -14,6 +14,12 @@ const envSchema = z.object({
   JWT_SECRET: z.string().min(16, 'JWT_SECRET must be at least 16 characters'),
   JWT_EXPIRES_IN: z.string().default('7d'),
   DEFAULT_STUDENT_PASSWORD: z.string().min(4).default('school123'),
+  // Only set true when serving over HTTPS. For local/LAN (HTTP) keep it false,
+  // otherwise browsers drop the auth cookie and logins silently fail.
+  COOKIE_SECURE: z
+    .string()
+    .default('false')
+    .transform((v) => v.toLowerCase() === 'true'),
 })
 
 const parsed = envSchema.safeParse(process.env)
