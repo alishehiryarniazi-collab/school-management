@@ -295,6 +295,92 @@ async function main() {
   console.log(
     '✅ Demo attendance, marks, syllabus, date sheet, timetable, notice'
   )
+
+  // --- Fees & school branding ---
+  const existingProfile = await prisma.schoolProfile.findFirst()
+  if (!existingProfile) {
+    await prisma.schoolProfile.create({
+      data: {
+        name: 'Bright Future School',
+        tagline: 'Knowledge • Character • Success',
+        address: 'Jaranwala Road, Faisalabad',
+        phone: '041-1234567',
+        email: 'info@brightfuture.edu.pk',
+        logoUrl: '/school-logo.svg',
+      },
+    })
+  }
+
+  const feeHeadDefs = [
+    { name: 'Admission Fee', isRecurring: false },
+    { name: 'Monthly Fee', isRecurring: true },
+    { name: 'Exam Fee', isRecurring: false },
+  ]
+  for (const h of feeHeadDefs) {
+    await prisma.feeHead.upsert({
+      where: { name: h.name },
+      update: {},
+      create: h,
+    })
+  }
+  const heads = await prisma.feeHead.findMany()
+  const head = (n: string) => heads.find((h) => h.name === n)!
+
+  const amounts: Record<string, number> = {
+    'Monthly Fee': 3000,
+    'Admission Fee': 5000,
+    'Exam Fee': 2000,
+  }
+  for (const cls of [class5, class6]) {
+    for (const [name, amount] of Object.entries(amounts)) {
+      await prisma.classFee.upsert({
+        where: {
+          classId_feeHeadId: { classId: cls.id, feeHeadId: head(name).id },
+        },
+        update: { amount },
+        create: { classId: cls.id, feeHeadId: head(name).id, amount },
+      })
+    }
+  }
+
+  // Demo monthly challans for 5-A: one paid, one partial, one unpaid.
+  const now = new Date()
+  const period = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
+  const monthTitle = now.toLocaleString('en-US', {
+    month: 'long',
+    year: 'numeric',
+  })
+  const monthly = head('Monthly Fee')
+  const demo = [
+    { s: s1, paid: 1000, status: 'partial' },
+    { s: s2, paid: 3000, status: 'paid' },
+    { s: s3, paid: 0, status: 'unpaid' },
+  ]
+  for (const d of demo) {
+    const exists = await prisma.feeChallan.findUnique({
+      where: { studentId_period: { studentId: d.s.id, period } },
+    })
+    if (exists) continue
+    await prisma.feeChallan.create({
+      data: {
+        studentId: d.s.id,
+        period,
+        title: monthTitle,
+        total: 3000,
+        paidAmount: d.paid,
+        status: d.status,
+        paidDate: d.paid > 0 ? new Date() : null,
+        receiptNo: d.paid > 0 ? `RCP-${String(d.s.id).padStart(5, '0')}` : null,
+        items: {
+          create: [
+            { feeHeadId: monthly.id, label: 'Monthly Fee', amount: 3000 },
+          ],
+        },
+      },
+    })
+  }
+  console.log('✅ Fees: school profile, fee heads, class fees, demo challans')
+
   console.log('\n🌱 Seeding complete.')
   console.log(
     '   Student demo login → Class 5 / Section A / Roll 2 / school123'

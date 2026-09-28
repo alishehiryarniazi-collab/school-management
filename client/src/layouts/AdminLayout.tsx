@@ -17,6 +17,10 @@ import {
   IconCalendar,
   IconGrid,
   IconFileText,
+  IconWallet,
+  IconReceipt,
+  IconChart,
+  IconBuilding,
   IconLogout,
   IconMenu,
   IconClose,
@@ -32,6 +36,30 @@ interface NavItem {
 // Nav items are filtered by the current user's role.
 const NAV: NavItem[] = [
   { to: '/', label: 'Dashboard', icon: IconHome, roles: ['admin', 'teacher'] },
+  {
+    to: '/collect-fees',
+    label: 'Collect Fees',
+    icon: IconWallet,
+    roles: ['admin'],
+  },
+  {
+    to: '/generate-challans',
+    label: 'Generate Challans',
+    icon: IconReceipt,
+    roles: ['admin'],
+  },
+  {
+    to: '/fee-setup',
+    label: 'Fee Setup',
+    icon: IconClipboard,
+    roles: ['admin'],
+  },
+  {
+    to: '/fee-reports',
+    label: 'Fee Reports',
+    icon: IconChart,
+    roles: ['admin'],
+  },
   {
     to: '/attendance',
     label: 'Attendance',
@@ -86,6 +114,12 @@ const NAV: NavItem[] = [
     to: '/assignments',
     label: 'Assignments',
     icon: IconLink,
+    roles: ['admin'],
+  },
+  {
+    to: '/school-profile',
+    label: 'School Profile',
+    icon: IconBuilding,
     roles: ['admin'],
   },
 ]

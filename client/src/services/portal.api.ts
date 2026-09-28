@@ -8,6 +8,7 @@ import type {
   DatesheetEntry,
   TimetableSlot,
   Notice,
+  Challan,
 } from '../types'
 
 export const portalApi = {
@@ -20,4 +21,5 @@ export const portalApi = {
   timetable: () =>
     http.get<{ timetable: TimetableSlot[] }>('/portal/timetable'),
   notices: () => http.get<{ notices: Notice[] }>('/portal/notices'),
+  fees: () => http.get<{ challans: Challan[] }>('/portal/fees'),
 }

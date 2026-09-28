@@ -91,6 +91,21 @@ are DB rows (not hardcoded), so this scales freely. Student lists get search + f
    start-app.bat, stop-app.bat + HOW-TO-RUN.md. Cookies via COOKIE_SECURE env
    (false for HTTP/LAN). Online deploy still optional/pending.
 
+## Product direction (Sept 2026) — selling to schools
+Turning this into a product to sell to local schools. Killer selling feature =
+FEE MANAGEMENT (schools pay for this). Selling model: start with offline install
++ yearly support, move to online subscription later (same codebase does both).
+
+10. Fee Management module ✅ DONE (backend + UI, 22/22 API tests + browser verified)
+    - Models: SchoolProfile (branding), FeeHead, ClassFee, FeeChallan, FeeChallanItem
+    - Fee heads: Admission (5000, one-time), Monthly (3000, recurring), Exam (2000)
+    - Admin pages: School Profile, Fee Setup (heads + class amounts), Generate
+      Challans (per section/month), Collect Fees (partial/full pay + print),
+      Fee Reports (collected/outstanding/defaulters). Student portal: Fees tab.
+    - Printable challan/receipt with school logo (utils/printChallan.ts).
+    - Money math uses round2; overpay blocked; paid challans can't be deleted.
+NEXT (selling features): Result Cards (printable, from marks) → SMS/WhatsApp to parents.
+
 ** v1 IS FEATURE-COMPLETE. All pages built and verified in the browser.
    Remaining: final polish pass, README, and free deploy. **
 

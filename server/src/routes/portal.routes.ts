@@ -14,5 +14,6 @@ router.get('/syllabus', portalController.syllabus)
 router.get('/datesheet', portalController.datesheet)
 router.get('/timetable', portalController.timetable)
 router.get('/notices', portalController.notices)
+router.get('/fees', portalController.fees)
 
 export default router

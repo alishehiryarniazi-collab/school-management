@@ -36,3 +36,7 @@ export async function timetable(req: Request, res: Response) {
 export async function notices(_req: Request, res: Response) {
   res.json({ notices: await portalService.getNotices() })
 }
+
+export async function fees(req: Request, res: Response) {
+  res.json({ challans: await portalService.getFees(userId(req)) })
+}

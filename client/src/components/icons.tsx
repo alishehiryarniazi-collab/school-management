@@ -161,3 +161,32 @@ export const IconFileText = (p: IconProps) => (
     <path d="M14 3v5h5M9 13h6M9 17h6" />
   </svg>
 )
+
+export const IconWallet = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M3 7a2 2 0 0 1 2-2h13a1 1 0 0 1 1 1v2" />
+    <path d="M3 7v10a2 2 0 0 0 2 2h14a1 1 0 0 0 1-1v-3" />
+    <path d="M20 9v6h-4a3 3 0 0 1 0-6Z" />
+  </svg>
+)
+
+export const IconReceipt = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M5 3v18l2-1 2 1 2-1 2 1 2-1 2 1V3l-2 1-2-1-2 1-2-1-2 1Z" />
+    <path d="M8 8h8M8 12h8M8 16h5" />
+  </svg>
+)
+
+export const IconChart = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M3 3v18h18" />
+    <path d="M7 15l4-4 3 3 5-6" />
+  </svg>
+)
+
+export const IconBuilding = (p: IconProps) => (
+  <svg {...base(p)}>
+    <rect x="4" y="3" width="16" height="18" rx="2" />
+    <path d="M9 7h.01M15 7h.01M9 11h.01M15 11h.01M9 15h.01M15 15h.01M10 21v-3h4v3" />
+  </svg>
+)

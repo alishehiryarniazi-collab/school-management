@@ -4,6 +4,7 @@
 import { prisma } from '../config/prisma.js'
 import { notFound } from '../utils/AppError.js'
 import { listNoticesForStudents } from './notice.service.js'
+import { getStudentChallans } from './challan.service.js'
 
 // Resolve the Student row (with section + class) from the logged-in user id.
 async function getStudentByUser(userId: number) {
@@ -104,4 +105,9 @@ export async function getTimetable(userId: number) {
 
 export async function getNotices() {
   return listNoticesForStudents()
+}
+
+export async function getFees(userId: number) {
+  const s = await getStudentByUser(userId)
+  return getStudentChallans(s.id)
 }

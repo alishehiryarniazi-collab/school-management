@@ -61,6 +61,7 @@ model Student {
 
   attendance Attendance[]
   marks      Mark[]
+  challans   FeeChallan[]
 
   @@unique([sectionId, rollNo]) // roll no unique within one section
 }
@@ -75,6 +76,7 @@ model Class {
   sections  Section[]
   syllabus  Syllabus[]
   datesheet Datesheet[]
+  classFees ClassFee[]
 }
 
 // A section within a class, e.g. "A" (=> "5-A"). Optionally has a class teacher.
@@ -217,4 +219,87 @@ model Notice {
   postedBy   User?    @relation(fields: [postedById], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Fees & school branding
+// ---------------------------------------------------------------------------
+
+// Single row (id = 1) holding the school's name/logo shown on challans,
+// receipts and result cards. This is also the "branding" that makes the
+// software feel like the school's own.
+model SchoolProfile {
+  id        Int      @id @default(autoincrement())
+  name      String   @default("My School")
+  tagline   String? // e.g. "Knowledge • Character • Success"
+  address   String?
+  phone     String?
+  email     String?
+  logoUrl   String? // path to the logo image
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// A type of fee, e.g. "Monthly Fee", "Admission Fee", "Exam Fee".
+// isRecurring = true for fees charged every month (tuition); false for
+// one-time charges (admission).
+model FeeHead {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  isRecurring Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  classFees    ClassFee[]
+  challanItems FeeChallanItem[]
+}
+
+// The amount of a fee head for a specific class (e.g. Class 5 monthly = 3000).
+model ClassFee {
+  id        Int      @id @default(autoincrement())
+  classId   Int
+  class     Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  feeHeadId Int
+  feeHead   FeeHead  @relation(fields: [feeHeadId], references: [id], onDelete: Cascade)
+  amount    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([classId, feeHeadId]) // one amount per fee head per class
+}
+
+// A fee bill (challan) issued to one student for one period.
+// total = sum(items) + fine - discount ; outstanding = total - paidAmount.
+model FeeChallan {
+  id         Int       @id @default(autoincrement())
+  studentId  Int
+  student    Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  period     String // machine key, e.g. "2026-09" or "admission"
+  title      String // human label, e.g. "September 2026"
+  issueDate  DateTime  @default(now())
+  dueDate    DateTime?
+  fine       Float     @default(0)
+  discount   Float     @default(0)
+  total      Float // payable amount
+  paidAmount Float     @default(0)
+  status     String    @default("unpaid") // 'unpaid' | 'partial' | 'paid'
+  paidDate   DateTime?
+  receiptNo  String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  items FeeChallanItem[]
+
+  @@unique([studentId, period]) // one challan per student per period
+}
+
+// A line item on a challan (e.g. "Monthly Fee — 3000").
+model FeeChallanItem {
+  id        Int        @id @default(autoincrement())
+  challanId Int
+  challan   FeeChallan @relation(fields: [challanId], references: [id], onDelete: Cascade)
+  feeHeadId Int?
+  feeHead   FeeHead?   @relation(fields: [feeHeadId], references: [id])
+  label     String
+  amount    Float
 }

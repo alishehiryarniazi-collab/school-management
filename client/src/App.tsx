@@ -17,6 +17,11 @@ import { SyllabusPage } from './pages/SyllabusPage'
 import { DatesheetPage } from './pages/DatesheetPage'
 import { TimetablePage } from './pages/TimetablePage'
 import { AssignmentsPage } from './pages/AssignmentsPage'
+import { CollectFeesPage } from './pages/CollectFeesPage'
+import { GenerateChallansPage } from './pages/GenerateChallansPage'
+import { FeeSetupPage } from './pages/FeeSetupPage'
+import { FeeReportsPage } from './pages/FeeReportsPage'
+import { SchoolProfilePage } from './pages/SchoolProfilePage'
 import { StudentPortalPage } from './pages/StudentPortalPage'
 
 export default function App() {
@@ -73,6 +78,48 @@ export default function App() {
               element={
                 <ProtectedRoute roles={['admin']}>
                   <AssignmentsPage />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Fees (admin only) */}
+            <Route
+              path="/collect-fees"
+              element={
+                <ProtectedRoute roles={['admin']}>
+                  <CollectFeesPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/generate-challans"
+              element={
+                <ProtectedRoute roles={['admin']}>
+                  <GenerateChallansPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/fee-setup"
+              element={
+                <ProtectedRoute roles={['admin']}>
+                  <FeeSetupPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/fee-reports"
+              element={
+                <ProtectedRoute roles={['admin']}>
+                  <FeeReportsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/school-profile"
+              element={
+                <ProtectedRoute roles={['admin']}>
+                  <SchoolProfilePage />
                 </ProtectedRoute>
               }
             />

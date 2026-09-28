@@ -168,6 +168,84 @@ export interface MarksRoster {
   roster: MarksRosterEntry[]
 }
 
+// ---- Fees & branding ----
+export interface SchoolProfile {
+  id: number
+  name: string
+  tagline?: string | null
+  address?: string | null
+  phone?: string | null
+  email?: string | null
+  logoUrl?: string | null
+}
+
+export interface FeeHead {
+  id: number
+  name: string
+  isRecurring: boolean
+}
+
+export interface ClassFee {
+  id: number
+  classId: number
+  feeHeadId: number
+  amount: number
+  class?: { id: number; name: string }
+  feeHead?: { id: number; name: string; isRecurring: boolean }
+}
+
+export interface ChallanItem {
+  id?: number
+  label: string
+  amount: number
+  feeHeadId?: number | null
+}
+
+export type ChallanStatus = 'unpaid' | 'partial' | 'paid'
+
+export interface Challan {
+  id: number
+  studentId: number
+  period: string
+  title: string
+  issueDate: string
+  dueDate?: string | null
+  fine: number
+  discount: number
+  total: number
+  paidAmount: number
+  status: ChallanStatus
+  paidDate?: string | null
+  receiptNo?: string | null
+  items: ChallanItem[]
+  student?: {
+    id: number
+    rollNo: number
+    user: { fullName: string }
+    section: { id: number; name: string; class: { id: number; name: string } }
+  }
+}
+
+export interface FeeReport {
+  collected: number
+  billed: number
+  outstanding: number
+  challanCount: number
+  paidCount: number
+  partialCount: number
+  unpaidCount: number
+  defaulters: Array<{
+    challanId: number
+    studentId: number
+    name: string
+    rollNo: number
+    className: string
+    sectionName: string
+    title: string
+    due: number
+  }>
+}
+
 export interface Pagination {
   page: number
   limit: number

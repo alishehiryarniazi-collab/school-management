@@ -14,10 +14,12 @@ import {
   DatesheetView,
   SyllabusView,
   NoticesView,
+  FeesView,
 } from '../components/portal/PortalViews'
 
 const TABS = [
   { key: 'attendance', label: 'Attendance', View: AttendanceView },
+  { key: 'fees', label: 'Fees', View: FeesView },
   { key: 'marks', label: 'Marks', View: MarksView },
   { key: 'timetable', label: 'Timetable', View: TimetableView },
   { key: 'datesheet', label: 'Date Sheet', View: DatesheetView },

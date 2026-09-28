@@ -6,6 +6,7 @@ import type { TimetableSlot } from '../../types'
 import { Card } from '../ui/Card'
 import { Badge } from '../ui/Badge'
 import { LoadingState, ErrorState, EmptyState } from '../ui/States'
+import { money } from '../../utils/money'
 
 function fmtDate(iso: string) {
   return new Date(iso).toLocaleDateString(undefined, {
@@ -280,6 +281,61 @@ export function NoticesView() {
           </p>
         </Card>
       ))}
+    </div>
+  )
+}
+
+// ---- Fees ----
+const feeTone: Record<string, 'success' | 'danger' | 'primary'> = {
+  paid: 'success',
+  partial: 'primary',
+  unpaid: 'danger',
+}
+
+export function FeesView() {
+  const { data, loading, error, reload } = useApi(() => portalApi.fees(), [])
+  if (loading) return <LoadingState />
+  if (error) return <ErrorState message={error} onRetry={reload} />
+  const challans = data?.challans ?? []
+  if (challans.length === 0) return <EmptyState title="No fee challans yet" />
+
+  const totalDue = challans.reduce((s, c) => s + (c.total - c.paidAmount), 0)
+
+  return (
+    <div className="space-y-4">
+      {totalDue > 0 && (
+        <Card className="p-4">
+          <p className="text-sm text-muted">Total balance due</p>
+          <p className="text-2xl font-semibold text-danger">
+            {money(totalDue)}
+          </p>
+        </Card>
+      )}
+      <Card>
+        <ul className="divide-y divide-border">
+          {challans.map((c) => (
+            <li
+              key={c.id}
+              className="flex items-center justify-between px-4 py-3 text-sm"
+            >
+              <div>
+                <p className="font-medium text-heading">{c.title}</p>
+                <p className="text-xs text-muted">
+                  Paid {money(c.paidAmount)} of {money(c.total)}
+                </p>
+              </div>
+              <div className="text-right">
+                <Badge tone={feeTone[c.status]}>{c.status}</Badge>
+                {c.total - c.paidAmount > 0 && (
+                  <p className="mt-1 text-xs text-danger">
+                    Due {money(c.total - c.paidAmount)}
+                  </p>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </Card>
     </div>
   )
 }

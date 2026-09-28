@@ -10,10 +10,13 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
-    port: 5173,
+    // Fixed on 5175 (strictPort) so it never collides with the other local projects
+    // (FinBooks 5173, OrderFlow 5174).
+    port: 5175,
+    strictPort: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:4000',
+        target: 'http://localhost:4003',
         changeOrigin: true,
       },
     },
