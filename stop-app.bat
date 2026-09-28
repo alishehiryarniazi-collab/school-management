@@ -2,16 +2,20 @@
 title School Management System - Stop
 echo Stopping the School Management System...
 
-rem Find and stop whatever is serving on port 4000.
+rem Read the port from server\.env so this always matches the running app.
+set APPPORT=4000
+for /f "tokens=2 delims==" %%a in ('findstr /b "PORT=" "%~dp0server\.env"') do set APPPORT=%%a
+
 set FOUND=0
-for /f "tokens=5" %%a in ('netstat -ano ^| findstr :4000 ^| findstr LISTENING') do (
+for /f "tokens=5" %%a in ('netstat -ano ^| findstr LISTENING ^| findstr ":%APPPORT% "') do (
   taskkill /F /PID %%a >nul 2>&1
   set FOUND=1
 )
 
 if "%FOUND%"=="1" (
-  echo Stopped.
+  echo Stopped ^(was on port %APPPORT%^).
 ) else (
-  echo It was not running.
+  echo It was not running on port %APPPORT%.
 )
-timeout /t 2 >nul
+rem brief pause so the message is readable (ping works even on a double-click)
+ping -n 3 127.0.0.1 >nul 2>&1
