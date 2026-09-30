@@ -50,3 +50,7 @@ export async function result(req: Request, res: Response) {
   const { examName } = portalResultQuerySchema.parse(req.query)
   res.json({ card: await portalService.getMyResult(userId(req), examName) })
 }
+
+export async function books(req: Request, res: Response) {
+  res.json({ books: await portalService.getBooks(userId(req)) })
+}

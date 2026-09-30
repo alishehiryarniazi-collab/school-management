@@ -475,3 +475,28 @@ function ResultCardView({ card }: { card: ResultCard }) {
     </Card>
   )
 }
+
+// ---- Books ----
+export function BooksView() {
+  const { data, loading, error, reload } = useApi(() => portalApi.books(), [])
+  if (loading) return <LoadingState />
+  if (error) return <ErrorState message={error} onRetry={reload} />
+  const books = data?.books ?? []
+  if (books.length === 0) return <EmptyState title="No books listed yet" />
+
+  return (
+    <Card>
+      <ul className="divide-y divide-border">
+        {books.map((b) => (
+          <li
+            key={b.id}
+            className="flex items-center justify-between px-4 py-3 text-sm"
+          >
+            <span className="font-medium text-heading">{b.title}</span>
+            {b.subject && <Badge tone="primary">{b.subject}</Badge>}
+          </li>
+        ))}
+      </ul>
+    </Card>
+  )
+}

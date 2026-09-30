@@ -117,6 +117,7 @@ const NAV: NavItem[] = [
     roles: ['admin'],
   },
   { to: '/subjects', label: 'Subjects', icon: IconBook, roles: ['admin'] },
+  { to: '/books', label: 'Books', icon: IconBook, roles: ['admin'] },
   {
     to: '/assignments',
     label: 'Assignments',

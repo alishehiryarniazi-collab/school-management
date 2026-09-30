@@ -301,6 +301,20 @@ async function main() {
     '✅ Demo attendance, marks, syllabus, date sheet, timetable, notice'
   )
 
+  // --- Books for Class 5 ---
+  if ((await prisma.book.count({ where: { classId: class5.id } })) === 0) {
+    await prisma.book.createMany({
+      data: [
+        { classId: class5.id, title: 'English Reader 5', subject: 'English' },
+        { classId: class5.id, title: 'Urdu Qaida 5', subject: 'Urdu' },
+        { classId: class5.id, title: 'Mathematics 5', subject: 'Mathematics' },
+        { classId: class5.id, title: 'General Science 5', subject: 'Science' },
+        { classId: class5.id, title: 'Islamiyat 5', subject: 'Islamiyat' },
+      ],
+    })
+    console.log('✅ Books for Class 5')
+  }
+
   // --- Fees & school branding ---
   const existingProfile = await prisma.schoolProfile.findFirst()
   if (!existingProfile) {

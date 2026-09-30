@@ -1,0 +1,10 @@
+-- CreateTable
+CREATE TABLE "Book" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "classId" INTEGER NOT NULL,
+    "title" TEXT NOT NULL,
+    "subject" TEXT,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    CONSTRAINT "Book_classId_fkey" FOREIGN KEY ("classId") REFERENCES "Class" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);

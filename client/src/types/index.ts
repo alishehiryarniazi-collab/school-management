@@ -176,6 +176,14 @@ export interface MarksRoster {
   roster: MarksRosterEntry[]
 }
 
+export interface Book {
+  id: number
+  classId?: number
+  title: string
+  subject?: string | null
+  class?: { id: number; name: string }
+}
+
 // ---- Fees & branding ----
 export interface SchoolProfile {
   id: number

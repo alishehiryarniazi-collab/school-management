@@ -16,6 +16,7 @@ import {
   SyllabusView,
   NoticesView,
   FeesView,
+  BooksView,
 } from '../components/portal/PortalViews'
 
 const TABS = [
@@ -26,6 +27,7 @@ const TABS = [
   { key: 'timetable', label: 'Timetable', View: TimetableView },
   { key: 'datesheet', label: 'Date Sheet', View: DatesheetView },
   { key: 'syllabus', label: 'Syllabus', View: SyllabusView },
+  { key: 'books', label: 'Books', View: BooksView },
   { key: 'notices', label: 'Notices', View: NoticesView },
 ] as const
 

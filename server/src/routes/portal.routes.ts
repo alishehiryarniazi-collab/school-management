@@ -17,5 +17,6 @@ router.get('/notices', portalController.notices)
 router.get('/fees', portalController.fees)
 router.get('/result-exams', portalController.resultExams)
 router.get('/result', portalController.result)
+router.get('/books', portalController.books)
 
 export default router

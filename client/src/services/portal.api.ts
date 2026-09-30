@@ -10,6 +10,7 @@ import type {
   Notice,
   Challan,
   ResultCard,
+  Book,
 } from '../types'
 
 export const portalApi = {
@@ -28,4 +29,5 @@ export const portalApi = {
     http.get<{ card: ResultCard }>(
       `/portal/result?examName=${encodeURIComponent(examName)}`
     ),
+  books: () => http.get<{ books: Book[] }>('/portal/books'),
 }

@@ -78,6 +78,7 @@ model Class {
   datesheet Datesheet[]
   classFees ClassFee[]
   notices   Notice[]
+  books     Book[]
 }
 
 // A section within a class, e.g. "A" (=> "5-A"). Optionally has a class teacher.
@@ -226,6 +227,17 @@ model Notice {
   postedBy   User?    @relation(fields: [postedById], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
+
+// A book a class needs (shown to students/parents as the class's book list).
+model Book {
+  id        Int      @id @default(autoincrement())
+  classId   Int
+  class     Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  title     String
+  subject   String? // optional: which subject the book is for
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // ---------------------------------------------------------------------------

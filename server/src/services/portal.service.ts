@@ -6,6 +6,7 @@ import { notFound } from '../utils/AppError.js'
 import { listNoticesForStudent } from './notice.service.js'
 import { getStudentChallans } from './challan.service.js'
 import { getResultCard } from './result.service.js'
+import { listBooksForClass } from './book.service.js'
 
 // Resolve the Student row (with section + class) from the logged-in user id.
 async function getStudentByUser(userId: number) {
@@ -129,4 +130,9 @@ export async function getMyExams(userId: number) {
 export async function getMyResult(userId: number, examName: string) {
   const s = await getStudentByUser(userId)
   return getResultCard(s.id, examName)
+}
+
+export async function getBooks(userId: number) {
+  const s = await getStudentByUser(userId)
+  return listBooksForClass(s.section.classId)
 }

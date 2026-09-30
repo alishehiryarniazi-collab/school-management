@@ -23,6 +23,7 @@ import { GenerateChallansPage } from './pages/GenerateChallansPage'
 import { FeeSetupPage } from './pages/FeeSetupPage'
 import { FeeReportsPage } from './pages/FeeReportsPage'
 import { SchoolProfilePage } from './pages/SchoolProfilePage'
+import { BooksPage } from './pages/BooksPage'
 import { StudentPortalPage } from './pages/StudentPortalPage'
 
 export default function App() {
@@ -72,6 +73,14 @@ export default function App() {
               element={
                 <ProtectedRoute roles={['admin']}>
                   <SubjectsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/books"
+              element={
+                <ProtectedRoute roles={['admin']}>
+                  <BooksPage />
                 </ProtectedRoute>
               }
             />

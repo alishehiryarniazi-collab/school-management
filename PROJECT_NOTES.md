@@ -104,7 +104,18 @@ FEE MANAGEMENT (schools pay for this). Selling model: start with offline install
       Fee Reports (collected/outstanding/defaulters). Student portal: Fees tab.
     - Printable challan/receipt with school logo (utils/printChallan.ts).
     - Money math uses round2; overpay blocked; paid challans can't be deleted.
-NEXT (selling features): Result Cards (printable, from marks) → SMS/WhatsApp to parents.
+### Product Phase 1 — ✅ COMPLETE (all built, tested, pushed)
+- Dashboard (fee %, defaulters, counts, attendance)
+- Auto monthly challan (whole school) + student challan PDF
+- Result Cards (grades/position/pass-fail, printable + PDF; student Result tab)
+- Targeted notices (class / section / everyone)
+- Books per class (admin manage + student Books tab)
+
+### NEXT — Phase 2 (needs Ali's deploy approval)
+- Online admissions (public apply → admin approve → challan → onboarding)
+- Deploy online (local-primary + online companion; one-way sync)
+- Then: online payment gateway (JazzCash/Easypaisa/Safepay), SMS/WhatsApp, parent logins
+- Ports: dev vite 5175 → proxy backend 4003; single-server demo uses .env PORT (4000).
 
 ** v1 IS FEATURE-COMPLETE. All pages built and verified in the browser.
    Remaining: final polish pass, README, and free deploy. **
