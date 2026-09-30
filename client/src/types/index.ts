@@ -246,6 +246,34 @@ export interface FeeReport {
   }>
 }
 
+export interface DashboardStats {
+  students: { total: number }
+  structure: {
+    teachers: number
+    classes: number
+    sections: number
+    subjects: number
+  }
+  attendanceToday: {
+    present: number
+    absent: number
+    late: number
+    leave: number
+    total: number
+    marked: number
+    percentPresent: number
+  }
+  fees: null | {
+    collected: number
+    outstanding: number
+    billed: number
+    paidCount: number
+    pendingCount: number
+    defaulters: number
+    percentCollected: number
+  }
+}
+
 export interface Pagination {
   page: number
   limit: number

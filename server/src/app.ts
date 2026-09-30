@@ -25,6 +25,7 @@ import timetableRoutes from './routes/timetable.routes.js'
 import portalRoutes from './routes/portal.routes.js'
 import schoolProfileRoutes from './routes/schoolProfile.routes.js'
 import feeRoutes from './routes/fee.routes.js'
+import dashboardRoutes from './routes/dashboard.routes.js'
 
 export function createApp() {
   const app = express()
@@ -63,6 +64,7 @@ export function createApp() {
   app.use('/api/portal', portalRoutes)
   app.use('/api/school-profile', schoolProfileRoutes)
   app.use('/api/fees', feeRoutes)
+  app.use('/api/dashboard', dashboardRoutes)
 
   // --- Serve the built React app (single-server / offline mode) ---
   // When the client has been built (client/dist exists), Express serves it so
