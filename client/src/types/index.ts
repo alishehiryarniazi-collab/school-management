@@ -246,6 +246,39 @@ export interface FeeReport {
   }>
 }
 
+// ---- Result cards ----
+export interface SubjectResult {
+  subject: string
+  obtained: number
+  total: number
+  percent: number
+  grade: string
+}
+export interface StudentResult {
+  studentId: number
+  name: string
+  rollNo: number
+  guardianName: string | null
+  subjects: SubjectResult[]
+  totalObtained: number
+  totalMax: number
+  percent: number
+  grade: string
+  result: 'Pass' | 'Fail' | 'N/A'
+  position: number
+}
+export interface ResultCard extends StudentResult {
+  section: { id: number; name: string; class: { id: number; name: string } }
+  examName: string
+  classSize: number
+}
+export interface ClassResult {
+  section: { id: number; name: string; class: { id: number; name: string } }
+  examName: string
+  students: StudentResult[]
+  classSize: number
+}
+
 export interface DashboardStats {
   students: { total: number }
   structure: {

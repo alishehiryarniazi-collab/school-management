@@ -20,6 +20,7 @@ import {
   IconWallet,
   IconReceipt,
   IconChart,
+  IconAward,
   IconBuilding,
   IconLogout,
   IconMenu,
@@ -70,6 +71,12 @@ const NAV: NavItem[] = [
     to: '/marks',
     label: 'Marks',
     icon: IconClipboard,
+    roles: ['admin', 'teacher'],
+  },
+  {
+    to: '/result-cards',
+    label: 'Result Cards',
+    icon: IconAward,
     roles: ['admin', 'teacher'],
   },
   {

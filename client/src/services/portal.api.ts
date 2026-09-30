@@ -9,6 +9,7 @@ import type {
   TimetableSlot,
   Notice,
   Challan,
+  ResultCard,
 } from '../types'
 
 export const portalApi = {
@@ -22,4 +23,9 @@ export const portalApi = {
     http.get<{ timetable: TimetableSlot[] }>('/portal/timetable'),
   notices: () => http.get<{ notices: Notice[] }>('/portal/notices'),
   fees: () => http.get<{ challans: Challan[] }>('/portal/fees'),
+  resultExams: () => http.get<{ exams: string[] }>('/portal/result-exams'),
+  result: (examName: string) =>
+    http.get<{ card: ResultCard }>(
+      `/portal/result?examName=${encodeURIComponent(examName)}`
+    ),
 }

@@ -182,30 +182,35 @@ async function main() {
     })
   }
 
-  // 7) Marks: Midterm Mathematics for 5-A
-  const marks = [
-    { s: s1, m: 78 },
-    { s: s2, m: 85 },
-    { s: s3, m: 64 },
-  ]
-  for (const r of marks) {
-    await prisma.mark.upsert({
-      where: {
-        studentId_subjectId_examName: {
-          studentId: r.s.id,
-          subjectId: subj('Mathematics').id,
-          examName: 'Midterm',
+  // 7) Marks: Midterm exam across several subjects for 5-A (for full result cards)
+  const examSubjects = ['English', 'Urdu', 'Mathematics', 'Science']
+  const studentMarks: Record<number, number[]> = {
+    [s1.id]: [72, 80, 78, 68], // Ali
+    [s2.id]: [88, 90, 85, 82], // Sara
+    [s3.id]: [60, 66, 64, 58], // Hamza
+  }
+  for (const stu of [s1, s2, s3]) {
+    const marks = studentMarks[stu.id] ?? []
+    for (const [i, subName] of examSubjects.entries()) {
+      const value = marks[i] ?? 0
+      await prisma.mark.upsert({
+        where: {
+          studentId_subjectId_examName: {
+            studentId: stu.id,
+            subjectId: subj(subName).id,
+            examName: 'Midterm',
+          },
         },
-      },
-      update: { marksObtained: r.m, totalMarks: 100 },
-      create: {
-        studentId: r.s.id,
-        subjectId: subj('Mathematics').id,
-        examName: 'Midterm',
-        marksObtained: r.m,
-        totalMarks: 100,
-      },
-    })
+        update: { marksObtained: value, totalMarks: 100 },
+        create: {
+          studentId: stu.id,
+          subjectId: subj(subName).id,
+          examName: 'Midterm',
+          marksObtained: value,
+          totalMarks: 100,
+        },
+      })
+    }
   }
 
   // 8) Syllabus, date sheet, timetable, notice

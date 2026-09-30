@@ -10,6 +10,7 @@ import { IconLogout } from '../components/icons'
 import {
   AttendanceView,
   MarksView,
+  ResultView,
   TimetableView,
   DatesheetView,
   SyllabusView,
@@ -21,6 +22,7 @@ const TABS = [
   { key: 'attendance', label: 'Attendance', View: AttendanceView },
   { key: 'fees', label: 'Fees', View: FeesView },
   { key: 'marks', label: 'Marks', View: MarksView },
+  { key: 'result', label: 'Result', View: ResultView },
   { key: 'timetable', label: 'Timetable', View: TimetableView },
   { key: 'datesheet', label: 'Date Sheet', View: DatesheetView },
   { key: 'syllabus', label: 'Syllabus', View: SyllabusView },

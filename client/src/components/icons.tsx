@@ -184,6 +184,13 @@ export const IconChart = (p: IconProps) => (
   </svg>
 )
 
+export const IconAward = (p: IconProps) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="9" r="6" />
+    <path d="M8.5 14 7 21l5-3 5 3-1.5-7" />
+  </svg>
+)
+
 export const IconBuilding = (p: IconProps) => (
   <svg {...base(p)}>
     <rect x="4" y="3" width="16" height="18" rx="2" />

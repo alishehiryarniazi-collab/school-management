@@ -5,6 +5,7 @@ import { prisma } from '../config/prisma.js'
 import { notFound } from '../utils/AppError.js'
 import { listNoticesForStudents } from './notice.service.js'
 import { getStudentChallans } from './challan.service.js'
+import { getResultCard } from './result.service.js'
 
 // Resolve the Student row (with section + class) from the logged-in user id.
 async function getStudentByUser(userId: number) {
@@ -110,4 +111,21 @@ export async function getNotices() {
 export async function getFees(userId: number) {
   const s = await getStudentByUser(userId)
   return getStudentChallans(s.id)
+}
+
+// Exam names the student has a result for.
+export async function getMyExams(userId: number) {
+  const s = await getStudentByUser(userId)
+  const rows = await prisma.mark.findMany({
+    where: { studentId: s.id },
+    distinct: ['examName'],
+    select: { examName: true },
+    orderBy: { examName: 'asc' },
+  })
+  return rows.map((r) => r.examName)
+}
+
+export async function getMyResult(userId: number, examName: string) {
+  const s = await getStudentByUser(userId)
+  return getResultCard(s.id, examName)
 }

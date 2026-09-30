@@ -1,5 +1,6 @@
 // The read-only views shown inside the student portal tabs. Each fetches the
 // logged-in student's own data.
+import { useState, useEffect } from 'react'
 import { useApi } from '../../hooks/useApi'
 import { portalApi } from '../../services/portal.api'
 import type { TimetableSlot } from '../../types'
@@ -7,9 +8,12 @@ import { Card } from '../ui/Card'
 import { Badge } from '../ui/Badge'
 import { LoadingState, ErrorState, EmptyState } from '../ui/States'
 import { Button } from '../ui/Button'
+import { Select } from '../ui/Select'
 import { money } from '../../utils/money'
 import { printChallan } from '../../utils/printChallan'
+import { printResultCard } from '../../utils/printResultCard'
 import { schoolProfileApi } from '../../services/fees.api'
+import type { ResultCard } from '../../types'
 
 function fmtDate(iso: string) {
   return new Date(iso).toLocaleDateString(undefined, {
@@ -351,5 +355,123 @@ export function FeesView() {
         </ul>
       </Card>
     </div>
+  )
+}
+
+// ---- Result ----
+export function ResultView() {
+  const { data: examData, loading: examsLoading } = useApi(
+    () => portalApi.resultExams(),
+    []
+  )
+  const { data: profileData } = useApi(() => schoolProfileApi.get(), [])
+  const profile = profileData?.profile
+  const exams = examData?.exams ?? []
+  const [exam, setExam] = useState('')
+
+  useEffect(() => {
+    setExam(examData?.exams?.[0] ?? '')
+  }, [examData])
+
+  const { data, loading, error, reload } = useApi(
+    () => (exam ? portalApi.result(exam) : Promise.resolve(null)),
+    [exam]
+  )
+
+  if (examsLoading) return <LoadingState />
+  if (exams.length === 0) return <EmptyState title="No result published yet" />
+
+  const card = data?.card
+
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-wrap items-end gap-3">
+        <div className="w-56">
+          <Select value={exam} onChange={(e) => setExam(e.target.value)}>
+            {exams.map((x) => (
+              <option key={x} value={x}>
+                {x}
+              </option>
+            ))}
+          </Select>
+        </div>
+        {card && profile && (
+          <Button
+            variant="secondary"
+            onClick={() => printResultCard(card, profile)}
+          >
+            Download PDF
+          </Button>
+        )}
+      </div>
+
+      {loading && <LoadingState />}
+      {error && <ErrorState message={error} onRetry={reload} />}
+      {card && <ResultCardView card={card} />}
+    </div>
+  )
+}
+
+function ResultCardView({ card }: { card: ResultCard }) {
+  return (
+    <Card className="p-5">
+      <div className="mb-3 flex items-center justify-between">
+        <div>
+          <p className="font-semibold text-heading">{card.examName}</p>
+          <p className="text-xs text-muted">
+            {card.section.class.name} — {card.section.name} · Roll #
+            {card.rollNo}
+          </p>
+        </div>
+        <Badge tone={card.result === 'Pass' ? 'success' : 'danger'}>
+          {card.result}
+        </Badge>
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="w-full text-left text-sm">
+          <thead className="border-b border-border text-xs uppercase tracking-wide text-muted">
+            <tr>
+              <th className="px-3 py-2 font-medium">Subject</th>
+              <th className="px-3 py-2 font-medium">Marks</th>
+              <th className="px-3 py-2 font-medium">%</th>
+              <th className="px-3 py-2 font-medium">Grade</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border">
+            {card.subjects.map((s) => (
+              <tr key={s.subject}>
+                <td className="px-3 py-2 text-body">{s.subject}</td>
+                <td className="px-3 py-2 text-body">
+                  {s.obtained}/{s.total}
+                </td>
+                <td className="px-3 py-2 text-muted">{s.percent}%</td>
+                <td className="px-3 py-2 text-body">{s.grade}</td>
+              </tr>
+            ))}
+            <tr className="font-semibold">
+              <td className="px-3 py-2 text-heading">Total</td>
+              <td className="px-3 py-2 text-heading">
+                {card.totalObtained}/{card.totalMax}
+              </td>
+              <td className="px-3 py-2 text-heading">{card.percent}%</td>
+              <td className="px-3 py-2 text-heading">{card.grade}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted">
+        <span>
+          Position:{' '}
+          <b className="text-heading">
+            {card.position || '—'} of {card.classSize}
+          </b>
+        </span>
+        <span>
+          Grade: <b className="text-heading">{card.grade}</b>
+        </span>
+      </div>
+    </Card>
   )
 }

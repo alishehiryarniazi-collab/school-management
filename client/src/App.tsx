@@ -17,6 +17,7 @@ import { SyllabusPage } from './pages/SyllabusPage'
 import { DatesheetPage } from './pages/DatesheetPage'
 import { TimetablePage } from './pages/TimetablePage'
 import { AssignmentsPage } from './pages/AssignmentsPage'
+import { ResultCardsPage } from './pages/ResultCardsPage'
 import { CollectFeesPage } from './pages/CollectFeesPage'
 import { GenerateChallansPage } from './pages/GenerateChallansPage'
 import { FeeSetupPage } from './pages/FeeSetupPage'
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="/" element={<DashboardPage />} />
             <Route path="/attendance" element={<AttendancePage />} />
             <Route path="/marks" element={<MarksPage />} />
+            <Route path="/result-cards" element={<ResultCardsPage />} />
             <Route path="/students" element={<StudentsPage />} />
             <Route path="/timetable" element={<TimetablePage />} />
             <Route path="/datesheet" element={<DatesheetPage />} />
