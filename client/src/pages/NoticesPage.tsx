@@ -20,6 +20,13 @@ const audienceLabel: Record<Notice['audience'], string> = {
   students: 'Students',
 }
 
+// What/who a notice is targeted to (section > class > audience).
+function targetLabel(n: Notice): string {
+  if (n.section) return `${n.section.class.name} — ${n.section.name}`
+  if (n.class) return n.class.name
+  return audienceLabel[n.audience]
+}
+
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString(undefined, {
     day: 'numeric',
@@ -87,7 +94,7 @@ export function NoticesPage() {
                   <h2 className="text-base font-semibold text-heading">
                     {n.title}
                   </h2>
-                  <Badge tone="primary">{audienceLabel[n.audience]}</Badge>
+                  <Badge tone="primary">{targetLabel(n)}</Badge>
                 </div>
                 <p className="mt-1 whitespace-pre-wrap text-sm text-body">
                   {n.body}

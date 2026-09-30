@@ -77,6 +77,7 @@ model Class {
   syllabus  Syllabus[]
   datesheet Datesheet[]
   classFees ClassFee[]
+  notices   Notice[]
 }
 
 // A section within a class, e.g. "A" (=> "5-A"). Optionally has a class teacher.
@@ -93,6 +94,7 @@ model Section {
   students            Student[]
   teachingAssignments TeachingAssignment[]
   timetable           Timetable[]
+  notices             Notice[]
 
   @@unique([classId, name]) // "A" appears once per class
 }
@@ -215,6 +217,11 @@ model Notice {
   title      String
   body       String
   audience   String   @default("all") // 'all' | 'teachers' | 'students'
+  // Optional targeting: a notice can be for one class, one section, or everyone.
+  classId    Int?
+  class      Class?   @relation(fields: [classId], references: [id], onDelete: SetNull)
+  sectionId  Int?
+  section    Section? @relation(fields: [sectionId], references: [id], onDelete: SetNull)
   postedById Int?
   postedBy   User?    @relation(fields: [postedById], references: [id])
   createdAt  DateTime @default(now())

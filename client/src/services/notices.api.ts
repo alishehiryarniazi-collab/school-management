@@ -5,6 +5,8 @@ export interface NoticeInput {
   title: string
   body: string
   audience: 'all' | 'teachers' | 'students'
+  classId?: number | null
+  sectionId?: number | null
 }
 
 export const noticesApi = {

@@ -1,4 +1,4 @@
-// Business logic for notices/announcements.
+// Business logic for notices/announcements, with optional class/section targeting.
 import { prisma } from '../config/prisma.js'
 import { notFound, forbidden } from '../utils/AppError.js'
 import type { Role } from '../types/auth.js'
@@ -9,6 +9,14 @@ import type {
 
 const noticeInclude = {
   postedBy: { select: { id: true, fullName: true, role: true } },
+  class: { select: { id: true, name: true } },
+  section: {
+    select: {
+      id: true,
+      name: true,
+      class: { select: { id: true, name: true } },
+    },
+  },
 }
 
 // Staff see all notices, newest first.
@@ -19,10 +27,21 @@ export async function listNotices() {
   })
 }
 
-// Notices a student should see: addressed to everyone or to students.
-export async function listNoticesForStudents() {
+// Notices a specific student should see: addressed to students/everyone AND
+// either general, or targeted to their class, or targeted to their section.
+export async function listNoticesForStudent(
+  sectionId: number,
+  classId: number
+) {
   return prisma.notice.findMany({
-    where: { audience: { in: ['all', 'students'] } },
+    where: {
+      audience: { in: ['all', 'students'] },
+      OR: [
+        { classId: null, sectionId: null }, // general
+        { sectionId }, // this student's section
+        { classId, sectionId: null }, // this student's whole class
+      ],
+    },
     orderBy: { createdAt: 'desc' },
     include: noticeInclude,
   })

@@ -34,8 +34,8 @@ export async function timetable(req: Request, res: Response) {
   res.json({ timetable: await portalService.getTimetable(userId(req)) })
 }
 
-export async function notices(_req: Request, res: Response) {
-  res.json({ notices: await portalService.getNotices() })
+export async function notices(req: Request, res: Response) {
+  res.json({ notices: await portalService.getNotices(userId(req)) })
 }
 
 export async function fees(req: Request, res: Response) {

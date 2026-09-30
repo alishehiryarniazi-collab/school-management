@@ -3,7 +3,7 @@
 // own information.
 import { prisma } from '../config/prisma.js'
 import { notFound } from '../utils/AppError.js'
-import { listNoticesForStudents } from './notice.service.js'
+import { listNoticesForStudent } from './notice.service.js'
 import { getStudentChallans } from './challan.service.js'
 import { getResultCard } from './result.service.js'
 
@@ -104,8 +104,9 @@ export async function getTimetable(userId: number) {
   })
 }
 
-export async function getNotices() {
-  return listNoticesForStudents()
+export async function getNotices(userId: number) {
+  const s = await getStudentByUser(userId)
+  return listNoticesForStudent(s.section.id, s.section.classId)
 }
 
 export async function getFees(userId: number) {

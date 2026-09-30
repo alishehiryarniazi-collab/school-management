@@ -83,6 +83,14 @@ export interface Notice {
   title: string
   body: string
   audience: 'all' | 'teachers' | 'students'
+  classId?: number | null
+  sectionId?: number | null
+  class?: { id: number; name: string } | null
+  section?: {
+    id: number
+    name: string
+    class: { id: number; name: string }
+  } | null
   postedById: number | null
   createdAt: string
   postedBy?: { id: number; fullName: string; role: Role } | null
