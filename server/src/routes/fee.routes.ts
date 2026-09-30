@@ -20,6 +20,7 @@ router.delete('/class-fees/:id', fee.deleteClassFee)
 
 // Challans (bills)
 router.post('/challans/generate', fee.generate)
+router.post('/challans/generate-monthly', fee.generateMonthly)
 router.get('/challans', fee.list)
 router.get('/challans/:id', fee.getOne)
 router.patch('/challans/:id/pay', fee.pay)

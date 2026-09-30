@@ -44,6 +44,16 @@ export const generateChallansSchema = z.object({
     .optional(),
 })
 
+// Auto: generate this month's challans for the WHOLE school (recurring fees).
+export const generateMonthlySchema = z.object({
+  period: z.string().trim().min(1, 'Month is required').max(30),
+  title: z.string().trim().min(1, 'Title is required').max(60),
+  dueDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .optional(),
+})
+
 export const challanFilterSchema = z.object({
   studentId: z.coerce.number().int().positive().optional(),
   sectionId: z.coerce.number().int().positive().optional(),

@@ -6,6 +6,7 @@ import {
   setClassFeeSchema,
   classFeeQuerySchema,
   generateChallansSchema,
+  generateMonthlySchema,
   challanFilterSchema,
   payChallanSchema,
   reportQuerySchema,
@@ -51,6 +52,10 @@ export async function deleteClassFee(req: Request, res: Response) {
 export async function generate(req: Request, res: Response) {
   const data = generateChallansSchema.parse(req.body)
   res.status(201).json(await challans.generateChallans(data))
+}
+export async function generateMonthly(req: Request, res: Response) {
+  const data = generateMonthlySchema.parse(req.body)
+  res.status(201).json(await challans.generateMonthlyForSchool(data))
 }
 export async function list(req: Request, res: Response) {
   const filter = challanFilterSchema.parse(req.query)

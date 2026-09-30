@@ -46,9 +46,21 @@ export function DashboardPage() {
               </div>
 
               <div className="mb-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
-                <Figure label="Collected" value={money(data.fees.collected)} tone="text-success" />
-                <Figure label="Outstanding" value={money(data.fees.outstanding)} tone="text-danger" />
-                <Figure label="Total billed" value={money(data.fees.billed)} tone="text-heading" />
+                <Figure
+                  label="Collected"
+                  value={money(data.fees.collected)}
+                  tone="text-success"
+                />
+                <Figure
+                  label="Outstanding"
+                  value={money(data.fees.outstanding)}
+                  tone="text-danger"
+                />
+                <Figure
+                  label="Total billed"
+                  value={money(data.fees.billed)}
+                  tone="text-heading"
+                />
               </div>
 
               {/* progress bar */}
@@ -61,25 +73,64 @@ export function DashboardPage() {
               <div className="h-3 w-full overflow-hidden rounded-full bg-canvas">
                 <div
                   className="h-full rounded-full bg-success transition-all"
-                  style={{ width: `${Math.min(100, data.fees.percentCollected)}%` }}
+                  style={{
+                    width: `${Math.min(100, data.fees.percentCollected)}%`,
+                  }}
                 />
               </div>
 
               <div className="mt-4 flex flex-wrap gap-x-8 gap-y-2 text-sm">
-                <Mini label="Paid challans" value={data.fees.paidCount} tone="text-success" />
-                <Mini label="Pending" value={data.fees.pendingCount} tone="text-warning" />
-                <Mini label="Defaulters" value={data.fees.defaulters} tone="text-danger" />
+                <Mini
+                  label="Paid challans"
+                  value={data.fees.paidCount}
+                  tone="text-success"
+                />
+                <Mini
+                  label="Pending"
+                  value={data.fees.pendingCount}
+                  tone="text-warning"
+                />
+                <Mini
+                  label="Defaulters"
+                  value={data.fees.defaulters}
+                  tone="text-danger"
+                />
               </div>
             </Card>
           )}
 
           {/* Stat cards */}
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-            <StatCard label="Students" value={data.students.total} icon={<IconGraduation />} tone="primary" />
-            <StatCard label="Teachers" value={data.structure.teachers} icon={<IconUsers />} tone="success" />
-            <StatCard label="Classes" value={data.structure.classes} icon={<IconLayers />} tone="amber" />
-            <StatCard label="Sections" value={data.structure.sections} icon={<IconLayers />} tone="neutral" />
-            <StatCard label="Subjects" value={data.structure.subjects} icon={<IconBook />} tone="neutral" />
+            <StatCard
+              label="Students"
+              value={data.students.total}
+              icon={<IconGraduation />}
+              tone="primary"
+            />
+            <StatCard
+              label="Teachers"
+              value={data.structure.teachers}
+              icon={<IconUsers />}
+              tone="success"
+            />
+            <StatCard
+              label="Classes"
+              value={data.structure.classes}
+              icon={<IconLayers />}
+              tone="amber"
+            />
+            <StatCard
+              label="Sections"
+              value={data.structure.sections}
+              icon={<IconLayers />}
+              tone="neutral"
+            />
+            <StatCard
+              label="Subjects"
+              value={data.structure.subjects}
+              icon={<IconBook />}
+              tone="neutral"
+            />
           </div>
 
           {/* Attendance today */}
@@ -103,10 +154,26 @@ export function DashboardPage() {
                   value={`${data.attendanceToday.percentPresent}%`}
                   tone="text-success"
                 />
-                <Figure label="Present" value={data.attendanceToday.present} tone="text-success" />
-                <Figure label="Absent" value={data.attendanceToday.absent} tone="text-danger" />
-                <Figure label="Late" value={data.attendanceToday.late} tone="text-warning" />
-                <Figure label="Leave" value={data.attendanceToday.leave} tone="text-muted" />
+                <Figure
+                  label="Present"
+                  value={data.attendanceToday.present}
+                  tone="text-success"
+                />
+                <Figure
+                  label="Absent"
+                  value={data.attendanceToday.absent}
+                  tone="text-danger"
+                />
+                <Figure
+                  label="Late"
+                  value={data.attendanceToday.late}
+                  tone="text-warning"
+                />
+                <Figure
+                  label="Leave"
+                  value={data.attendanceToday.leave}
+                  tone="text-muted"
+                />
               </div>
             )}
           </Card>
@@ -133,7 +200,15 @@ function Figure({
   )
 }
 
-function Mini({ label, value, tone }: { label: string; value: number; tone: string }) {
+function Mini({
+  label,
+  value,
+  tone,
+}: {
+  label: string
+  value: number
+  tone: string
+}) {
   return (
     <span className="text-sm">
       <span className={`font-semibold ${tone}`}>{value}</span>{' '}
@@ -162,7 +237,9 @@ function StatCard({
 }) {
   return (
     <Card className="flex items-center gap-3 p-4">
-      <div className={`flex h-11 w-11 items-center justify-center rounded-lg ${toneClasses[tone]}`}>
+      <div
+        className={`flex h-11 w-11 items-center justify-center rounded-lg ${toneClasses[tone]}`}
+      >
         {icon}
       </div>
       <div>

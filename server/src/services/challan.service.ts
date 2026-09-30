@@ -95,6 +95,47 @@ export async function generateChallans(input: GenerateChallansInput) {
   return { created, skipped, students: students.length }
 }
 
+// Auto: generate monthly challans (recurring fees only) for EVERY section.
+// Sections whose class has no fee amounts set are simply skipped.
+export async function generateMonthlyForSchool(input: {
+  period: string
+  title: string
+  dueDate?: string
+}) {
+  const recurring = await prisma.feeHead.findMany({
+    where: { isRecurring: true },
+    select: { id: true },
+  })
+  if (recurring.length === 0) {
+    throw badRequest('No monthly (recurring) fee type is set up yet.')
+  }
+  const feeHeadIds = recurring.map((h) => h.id)
+  const sections = await prisma.section.findMany({ select: { id: true } })
+
+  let created = 0
+  let skipped = 0
+  let students = 0
+  let sectionsDone = 0
+  for (const sec of sections) {
+    try {
+      const r = await generateChallans({
+        sectionId: sec.id,
+        period: input.period,
+        title: input.title,
+        feeHeadIds,
+        dueDate: input.dueDate,
+      })
+      created += r.created
+      skipped += r.skipped
+      students += r.students
+      sectionsDone++
+    } catch {
+      // this class has no fees set yet — skip it
+    }
+  }
+  return { created, skipped, students, sections: sectionsDone }
+}
+
 export async function listChallans(filter: {
   studentId?: number
   sectionId?: number
@@ -240,7 +281,7 @@ export async function getReport(period?: string) {
 export async function getStudentChallans(studentId: number) {
   return prisma.feeChallan.findMany({
     where: { studentId },
-    include: { items: true },
+    include: challanInclude, // items + student info (for the printable PDF)
     orderBy: { issueDate: 'desc' },
   })
 }

@@ -47,6 +47,18 @@ export const challansApi = {
       '/fees/challans/generate',
       data
     ),
+  // Auto: whole-school monthly challans (recurring fees).
+  generateMonthly: (data: {
+    period: string
+    title: string
+    dueDate?: string
+  }) =>
+    http.post<{
+      created: number
+      skipped: number
+      students: number
+      sections: number
+    }>('/fees/challans/generate-monthly', data),
   list: (filter: {
     studentId?: number
     sectionId?: number

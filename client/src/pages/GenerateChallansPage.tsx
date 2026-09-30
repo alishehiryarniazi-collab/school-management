@@ -38,6 +38,28 @@ export function GenerateChallansPage() {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<string | null>(null)
+  const [autoBusy, setAutoBusy] = useState(false)
+  const [autoMsg, setAutoMsg] = useState<string | null>(null)
+
+  async function generateWholeSchool() {
+    setAutoMsg(null)
+    setAutoBusy(true)
+    try {
+      const r = await challansApi.generateMonthly({
+        period: month,
+        title: monthTitle(month),
+        dueDate: dueDate || undefined,
+      })
+      setAutoMsg(
+        `✓ ${r.created} challan(s) banaye ${r.sections} section(s) mein` +
+          (r.skipped ? `, ${r.skipped} pehle se mojood the.` : '.')
+      )
+    } catch (err) {
+      setAutoMsg(err instanceof ApiError ? err.message : 'Nakaam raha')
+    } finally {
+      setAutoBusy(false)
+    }
+  }
 
   const sections = classId
     ? (classes.find((c) => c.id === classId)?.sections ?? [])
@@ -83,10 +105,43 @@ export function GenerateChallansPage() {
     <div>
       <PageHeader
         title="Generate Challans"
-        subtitle="Create fee bills for a whole section in one click."
+        subtitle="Poori school ya kisi ek section ke fee challans banayein."
       />
 
+      {/* Auto — whole school in one click */}
+      <Card className="mb-5 max-w-2xl border-primary/30 bg-primary-light/50 p-6">
+        <h2 className="font-semibold text-heading">
+          Auto — poori school ke monthly challans
+        </h2>
+        <p className="mt-1 text-sm text-muted">
+          Ek click mein har class/section ke students ke liye is mahine ki
+          monthly fee ke challans ban jayenge. (Jo pehle se hain woh skip
+          honge.)
+        </p>
+        <div className="mt-3 flex flex-wrap items-end gap-3">
+          <Input
+            label="Month"
+            type="month"
+            value={month}
+            onChange={(e) => setMonth(e.target.value)}
+          />
+          <Input
+            label="Due date (optional)"
+            type="date"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+          />
+          <Button onClick={generateWholeSchool} loading={autoBusy}>
+            Generate whole school ({monthTitle(month)})
+          </Button>
+        </div>
+        {autoMsg && <p className="mt-3 text-sm text-success">{autoMsg}</p>}
+      </Card>
+
       <Card className="max-w-2xl p-6">
+        <p className="mb-4 text-sm font-medium text-heading">
+          Ya sirf ek section ke liye:
+        </p>
         {error && (
           <div className="mb-4">
             <Alert>{error}</Alert>

@@ -6,7 +6,10 @@ import type { TimetableSlot } from '../../types'
 import { Card } from '../ui/Card'
 import { Badge } from '../ui/Badge'
 import { LoadingState, ErrorState, EmptyState } from '../ui/States'
+import { Button } from '../ui/Button'
 import { money } from '../../utils/money'
+import { printChallan } from '../../utils/printChallan'
+import { schoolProfileApi } from '../../services/fees.api'
 
 function fmtDate(iso: string) {
   return new Date(iso).toLocaleDateString(undefined, {
@@ -294,6 +297,8 @@ const feeTone: Record<string, 'success' | 'danger' | 'primary'> = {
 
 export function FeesView() {
   const { data, loading, error, reload } = useApi(() => portalApi.fees(), [])
+  const { data: profileData } = useApi(() => schoolProfileApi.get(), [])
+  const profile = profileData?.profile
   if (loading) return <LoadingState />
   if (error) return <ErrorState message={error} onRetry={reload} />
   const challans = data?.challans ?? []
@@ -316,20 +321,29 @@ export function FeesView() {
           {challans.map((c) => (
             <li
               key={c.id}
-              className="flex items-center justify-between px-4 py-3 text-sm"
+              className="flex items-center justify-between gap-3 px-4 py-3 text-sm"
             >
               <div>
                 <p className="font-medium text-heading">{c.title}</p>
                 <p className="text-xs text-muted">
                   Paid {money(c.paidAmount)} of {money(c.total)}
                 </p>
-              </div>
-              <div className="text-right">
-                <Badge tone={feeTone[c.status]}>{c.status}</Badge>
                 {c.total - c.paidAmount > 0 && (
-                  <p className="mt-1 text-xs text-danger">
+                  <p className="text-xs text-danger">
                     Due {money(c.total - c.paidAmount)}
                   </p>
+                )}
+              </div>
+              <div className="flex shrink-0 items-center gap-2">
+                <Badge tone={feeTone[c.status]}>{c.status}</Badge>
+                {profile && (
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    onClick={() => printChallan(c, profile)}
+                  >
+                    PDF
+                  </Button>
                 )}
               </div>
             </li>
